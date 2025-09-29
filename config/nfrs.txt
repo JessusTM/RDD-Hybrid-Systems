@@ -1,4 +1,3 @@
-precision => Precision
 precisión => Precision
 accurate => Precision
 accuracy => Precision

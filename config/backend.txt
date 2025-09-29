@@ -1,16 +1,12 @@
 hardware => Hardware
-cuantico => Hardware
 cuántico => Hardware
 quantum => Hardware
 quantum hardware => Hardware
-procesador cuantico => Hardware
 procesador cuántico => Hardware
 quantum processor => Hardware
 quantum device => Hardware
 
-clasico => Classical
 clásico => Classical
-computador clasico => Classical
 computador clásico => Classical
 supercomputador => Classical
 super computer => Classical
@@ -20,9 +16,7 @@ cpu => Classical
 gpu => Classical
 
 simulador => Simulator
-simulacion => Simulator
 simulación => Simulator
 simulation => Simulator
 quantum simulator => Simulator
-simulador cuantico => Simulator
 simulador cuántico => Simulator
