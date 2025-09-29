@@ -41,3 +41,9 @@ Prototipo que permite transformar modelos i* 2.0 desde el nivel de intenciones y
 ```bash
 python3 iStar-UVL.py <archivo_entrada.xml> <archivo_salida.uvl>
 ```
+
+##### Ejemplo
+
+```bash
+python3 iStar-UVL.py examples/Chemistry.xml modelo.uvl
+```
