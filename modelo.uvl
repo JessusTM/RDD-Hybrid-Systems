@@ -1,0 +1,18 @@
+features {
+  ModelarPlegamientoDeProteínas {
+    Algorithm {
+      VQE
+    }
+    Backend {
+      Hardware
+    }
+    IntegrationModel {
+      Middleware
+    }
+    Precision
+  }
+}
+
+constraints {
+  VQE requires Precision
+}
