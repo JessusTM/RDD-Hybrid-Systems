@@ -6,7 +6,6 @@ from fastapi import APIRouter, HTTPException
 
 from app.api.schemas.path import PathRequest
 from app.models.llm_contract import InteractionInput, InteractionReport
-from app.models.llm_contract import UvlModel
 from app.services.artifacts.uvl_service import UvlService
 from app.services.interaction.service import run_interaction
 
@@ -25,13 +24,12 @@ async def get_interaction_report(request: PathRequest):
         raise HTTPException(status_code=404, detail=f"No se encontró UVL en {uvl_path}")
 
     try:
-        uvl_content = uvl_path.read_text(encoding="utf-8")
-        service = UvlService()
-        uvl_dict = service.parse_uvl_to_dict(uvl_content)
-        uvl_model = UvlModel(**uvl_dict)
-
-        payload = InteractionInput(nodes=[], links=[], uvl=uvl_model)
-        report = run_interaction(payload, provider="ollama")
+        output_uvl_content = uvl_path.read_text(encoding="utf-8")
+        payload = InteractionInput(
+            output_uvl_path=str(uvl_path),
+            output_uvl_content=output_uvl_content,
+        )
+        report = run_interaction(payload)
         return report
 
     except Exception as exc:
@@ -50,9 +48,9 @@ async def get_functionality_names(request: PathRequest):
         raise HTTPException(status_code=404, detail=f"No se encontró UVL en {uvl_path}")
 
     try:
-        uvl_content = uvl_path.read_text(encoding="utf-8")
+        output_uvl_content = uvl_path.read_text(encoding="utf-8")
         service = UvlService()
-        subfunciones = service.extract_functionality_names(uvl_content)
+        subfunciones = service.extract_functionality_names(output_uvl_content)
         return {f"subfuncion_{i + 1}": nombre for i, nombre in enumerate(subfunciones)}
 
     except Exception as exc:

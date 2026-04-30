@@ -1,4 +1,4 @@
-"""Shared contracts for CIM data, UVL snapshots, and interaction outputs."""
+"""Shared contracts for model analysis inputs and interaction outputs."""
 
 from typing import Any, Dict, List, Literal, Optional
 from pydantic import BaseModel
@@ -63,15 +63,14 @@ class UvlModel(BaseModel):
 # ------------ Interaction Models ------------
 # Data structures below describe the questions and proposals returned to the user.
 class InteractionInput(BaseModel):
-    """Bundles the CIM and UVL inputs required by one interaction run.
+    """Bundles the generated artifact inputs required by one interaction run.
 
-    This model gives the interaction engine a single request object that includes
-    the diagram evidence and the current UVL draft under review.
+    This model gives the interaction layer the generated UVL artifact it must analyze
+    without coupling the analyzer to filesystem reads performed by the API layer.
     """
 
-    nodes: List[CimNode] = []
-    links: List[CimLink] = []
-    uvl: UvlModel
+    output_uvl_path: Optional[str] = None
+    output_uvl_content: str
 
 
 QuestionScope = Literal[

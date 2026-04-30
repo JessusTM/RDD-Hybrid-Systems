@@ -1,62 +1,35 @@
-"""Service helpers that select and run the backend interaction engines."""
+"""Service helpers that run optional LLM-backed interaction analysis on generated UVL."""
 
-from typing import Dict
+from typing import Dict, Optional
+
 from app.models.llm_contract import InteractionInput, InteractionReport
-from app.services.interaction.llm_client import LLMInteractionEngine
-from app.services.interaction.rule_based import RuleBasedInteractionEngine
-from app.services.interaction.llm.factory import get_llm_client
 from app.models.uvl import UVL
-
-
-# ====== Public API ======
-# Functions below select the interaction engine and apply the resulting user decisions.
-
-
-def get_interaction_engine(provider: str = "ollama") -> object:
-    """Returns the interaction engine that matches the requested provider.
-
-    This helper centralizes engine selection so the rest of the interaction flow can use
-    one shared entry point for rule-based and LLM-backed execution.
-    """
-
-    if provider == "rule_based":
-        return RuleBasedInteractionEngine()
-
-    if provider in ["ollama", "lmstudio"]:
-        llm_client = get_llm_client(provider)
-        return LLMInteractionEngine(llm_client)
-
-    return RuleBasedInteractionEngine()
+from app.services.interaction.analyzers.uvl_completeness import UvlCompletenessAnalyzer
+from app.services.interaction.providers.factory import get_provider
+from app.services.interaction.questions import build_questions_from_missing
 
 
 def run_interaction(
-    payload: InteractionInput, provider: str = "ollama"
+    payload: InteractionInput, provider: Optional[str] = None
 ) -> InteractionReport:
-    """Runs the interaction flow with the selected provider and returns its report.
+    """Runs the UVL interaction analysis with the selected provider and returns its report.
 
-    This helper keeps the orchestration step small by combining engine resolution and
-    report generation in one call used by the API layer.
+    This helper keeps provider selection, UVL analysis, and question generation in one
+    shared entry point used by the API layer.
     """
-
-    engine = get_interaction_engine(provider)
-    return engine.run(payload)
+    llm_provider = get_provider(provider)
+    analyzer = UvlCompletenessAnalyzer(llm_provider)
+    analysis = analyzer.analyze(payload)
+    questions = build_questions_from_missing(analysis.get("missing", []))
+    return InteractionReport(questions=questions, proposals=[])
 
 
 def apply_user_answers(uvl: UVL, answers: Dict) -> str:
-    """Applies the provided answers to the UVL model and returns the saved text.
+    """Placeholder kept for future UVL updates after the guided interaction step.
 
-    This helper is used after clarification so the selected answers can be reflected in
-    the UVL draft before the updated file is returned to the caller.
+    Applying user answers back into the generated UVL is intentionally left out of the
+    current phase, where the interaction module only analyzes artifacts.
     """
-
-    for block, value in answers.items():
-        category = (
-            f"@{block}" if f"@{block}" in uvl.allowed_categories else "@Functionality"
-        )
-        uvl.add_feature(name=value, category=category)
-
-    uvl.create_file()
-
-    if uvl.FILE_NAME.exists():
-        return uvl.FILE_NAME.read_text(encoding="utf-8")
-    return ""
+    raise NotImplementedError(
+        "Applying user answers back into the UVL is not implemented in this phase."
+    )
