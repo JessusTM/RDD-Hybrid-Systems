@@ -2,7 +2,7 @@
 
 from typing import List
 
-from app.models.llm_contract import InteractionQuestion
+from app.services.interaction.contracts import InteractionQuestion
 
 
 def build_questions_from_missing(missing_blocks: List[str]) -> List[InteractionQuestion]:

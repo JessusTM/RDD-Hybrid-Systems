@@ -4,7 +4,7 @@ import json
 import re
 from typing import Dict
 
-from app.models.llm_contract import InteractionInput
+from app.services.interaction.contracts import InteractionInput
 from app.services.interaction.providers.base import LLMProvider
 
 HQC_EXTENDED_FEATURE_MODEL = [

@@ -2,7 +2,7 @@
 
 from typing import Dict, Optional
 
-from app.models.llm_contract import InteractionInput, InteractionReport
+from app.services.interaction.contracts import InteractionInput, InteractionReport
 from app.models.uvl import UVL
 from app.services.interaction.analyzers.uvl_completeness import UvlCompletenessAnalyzer
 from app.services.interaction.providers.factory import get_provider

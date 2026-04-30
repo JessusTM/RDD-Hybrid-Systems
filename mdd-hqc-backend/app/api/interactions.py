@@ -5,7 +5,7 @@ from pathlib import Path
 from fastapi import APIRouter, HTTPException
 
 from app.api.schemas.path import PathRequest
-from app.models.llm_contract import InteractionInput, InteractionReport
+from app.services.interaction.contracts import InteractionInput, InteractionReport
 from app.services.artifacts.uvl_service import UvlService
 from app.services.interaction.service import run_interaction
 
