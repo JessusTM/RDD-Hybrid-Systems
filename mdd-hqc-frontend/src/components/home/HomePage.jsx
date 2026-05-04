@@ -35,19 +35,19 @@ const featureCards = [
 
 const workflowStages = [
   {
-    label: "Goal Model",
-    subtitle: "Computation Independent Model",
+    label: "Goal\nModel",
+    subtitle: "Actors, Goals, and Dependencies",
     notation: "iStar 2.0",
     accent: "text-ctp-blue border-ctp-blue/20 bg-ctp-blue/10",
   },
   {
-    label: "Variability Model",
+    label: "Variability\nModel",
     subtitle: "Design decisions and variability",
     notation: "Extended Feature Model / UVL",
     accent: "text-ctp-mauve border-ctp-mauve/20 bg-ctp-mauve/10",
   },
   {
-    label: "Architecture Model",
+    label: "Architecture\nModel",
     subtitle: "Preliminary system architecture",
     notation: "Quantum-UML",
     accent: "text-ctp-teal border-ctp-teal/20 bg-ctp-teal/10",
@@ -118,9 +118,9 @@ const operationsCards = [
  * Renders a reusable section heading block for home sections.
  */
 const SectionHeading = ({ title, description, centered = false }) => (
-  <div className={centered ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+  <div className={centered ? "mx-auto max-w-5xl text-center" : "max-w-3xl"}>
     <h2 className="text-4xl md:text-5xl font-black tracking-tight text-ctp-text">{title}</h2>
-    <p className="mt-5 text-lg leading-8 text-ctp-subtext0">{description}</p>
+    <p className="mt-5 text-xl leading-9 text-ctp-subtext0 md:text-2xl">{description}</p>
   </div>
 )
 
@@ -182,7 +182,7 @@ export const HomePage = () => {
               className="mb-10 h-auto w-full max-w-[40rem] drop-shadow-2xl"
             />
             <h1 className="mt-2 max-w-6xl text-3xl font-black tracking-tight text-ctp-mauve md:text-5xl md:leading-[1.1]">
-              MDD-HQC: A goal-oriented, model-driven approach to designing hybrid quantum-classical systems.
+              MDD-HQC: A Goal-Oriented and Model-Driven Approach for Hybrid Quantum–Classical Systems
             </h1>
             <p className="mt-8 max-w-3xl text-lg leading-8 text-ctp-subtext0 md:text-xl">
               Understand requirements, structure design decisions, and move from goals to architectural models through a guided workflow.
@@ -209,14 +209,17 @@ export const HomePage = () => {
 
         <section id="overview" className="bg-ctp-mantle px-6 py-24">
           <div className="mx-auto max-w-7xl">
-            <div className="grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center">
-              <div>
-                <SectionHeading
-                  title="What is MDD-HQC?"
-                  description="MDD-HQC is a design support application that helps users model requirements, guide transformations, and structure hybrid quantum-classical system solutions across multiple abstraction levels."
-                />
+            <div className="max-w-3xl">
+              <h2 className="text-4xl md:text-5xl font-black tracking-tight text-ctp-text">What is MDD-HQC?</h2>
+            </div>
+
+            <div className="mt-10 grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-stretch">
+              <div className="flex h-full flex-col">
+                <p className="max-w-3xl text-lg leading-8 text-ctp-subtext0">
+                  MDD-HQC is a design support application that helps users model requirements, guide transformations, and structure hybrid quantum-classical system solutions across multiple abstraction levels.
+                </p>
                 <div className="mt-8 h-2 w-20 rounded-full bg-ctp-mauve" />
-                <div className="mt-12 space-y-6">
+                <div className="mt-12 flex-1 space-y-6">
                   {featureCards.map(({ icon: Icon, title, description }) => (
                     <article
                       key={title}
@@ -234,13 +237,13 @@ export const HomePage = () => {
                 </div>
               </div>
 
-              <div className="relative lg:mt-10">
+              <div className="relative flex h-full">
                 <div className="absolute -inset-6 rounded-full bg-ctp-mauve/10 blur-[90px]" />
-                <div className="relative overflow-hidden rounded-[2.5rem] border border-ctp-surface0 bg-ctp-base p-4 shadow-2xl shadow-black/20">
+                <div className="relative flex h-full w-full overflow-hidden rounded-[2.5rem] border border-ctp-surface0 bg-ctp-base p-4 shadow-2xl shadow-black/20">
                   <img
                     src="/images/layers.png"
                     alt="MDD-HQC conceptual layers diagram"
-                    className="h-auto w-full rounded-[2rem]"
+                    className="h-full w-full rounded-[2rem] object-contain"
                   />
                 </div>
               </div>
@@ -255,33 +258,39 @@ export const HomePage = () => {
               title="Model-Driven Workflow"
               description="Designing hybrid quantum-classical systems is challenging because requirements, variability, and architecture must remain connected across different abstraction levels. MDD-HQC addresses this through a model-driven workflow."
             />
-            <p className="mx-auto mt-6 max-w-3xl text-center text-base italic leading-7 text-ctp-subtext1">
+            <p className="mx-auto mt-6 max-w-4xl text-center text-lg italic leading-8 text-ctp-subtext1 md:text-xl">
               Instead of jumping directly into implementation, the workflow starts from problem understanding and progressively refines the solution into connected design artifacts.
             </p>
-            <div className="mt-16 grid gap-6 lg:grid-cols-[minmax(0,1fr)_110px_minmax(0,1fr)_110px_minmax(0,1fr)] lg:items-center">
-              <article className={`self-stretch rounded-[2rem] border p-8 text-center shadow-xl shadow-black/10 ${workflowStages[0].accent}`}>
-                <div className="text-3xl font-black">{workflowStages[0].label}</div>
-                <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] opacity-80">{workflowStages[0].subtitle}</div>
+            <div className="mt-16 grid gap-6 lg:grid-cols-[300px_96px_300px_96px_300px] lg:justify-center lg:items-center">
+              <article className={`flex h-[340px] w-full flex-col items-center rounded-[2rem] border px-7 py-8 text-center shadow-xl shadow-black/10 ${workflowStages[0].accent}`}>
+                <div className="min-h-[92px] flex flex-col justify-start">
+                  <div className="whitespace-pre-line text-3xl font-black">{workflowStages[0].label}</div>
+                  <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] opacity-80">{workflowStages[0].subtitle}</div>
+                </div>
                 <div className="mx-auto mt-8 h-0.5 w-16 bg-current opacity-30" />
-                <div className="mt-8 text-sm font-semibold text-ctp-subtext0">
+                <div className="mt-auto min-h-[72px] text-base font-semibold text-ctp-subtext0 md:text-lg">
                   Notation: <span className="text-ctp-text">{workflowStages[0].notation}</span>
                 </div>
               </article>
               <WorkflowArrow />
-              <article className={`self-stretch rounded-[2rem] border p-8 text-center shadow-xl shadow-black/10 ${workflowStages[1].accent}`}>
-                <div className="text-3xl font-black">{workflowStages[1].label}</div>
-                <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] opacity-80">{workflowStages[1].subtitle}</div>
+              <article className={`flex h-[340px] w-full flex-col items-center rounded-[2rem] border px-7 py-8 text-center shadow-xl shadow-black/10 ${workflowStages[1].accent}`}>
+                <div className="min-h-[92px] flex flex-col justify-start">
+                  <div className="whitespace-pre-line text-3xl font-black">{workflowStages[1].label}</div>
+                  <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] opacity-80">{workflowStages[1].subtitle}</div>
+                </div>
                 <div className="mx-auto mt-8 h-0.5 w-16 bg-current opacity-30" />
-                <div className="mt-8 text-sm font-semibold text-ctp-subtext0">
+                <div className="mt-auto min-h-[72px] text-base font-semibold text-ctp-subtext0 md:text-lg">
                   Notation: <span className="text-ctp-text">{workflowStages[1].notation}</span>
                 </div>
               </article>
               <WorkflowArrow />
-              <article className={`self-stretch rounded-[2rem] border p-8 text-center shadow-xl shadow-black/10 ${workflowStages[2].accent}`}>
-                <div className="text-3xl font-black">{workflowStages[2].label}</div>
-                <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] opacity-80">{workflowStages[2].subtitle}</div>
+              <article className={`flex h-[340px] w-full flex-col items-center rounded-[2rem] border px-7 py-8 text-center shadow-xl shadow-black/10 ${workflowStages[2].accent}`}>
+                <div className="min-h-[92px] flex flex-col justify-start">
+                  <div className="whitespace-pre-line text-3xl font-black">{workflowStages[2].label}</div>
+                  <div className="mt-3 text-xs font-bold uppercase tracking-[0.25em] opacity-80">{workflowStages[2].subtitle}</div>
+                </div>
                 <div className="mx-auto mt-8 h-0.5 w-16 bg-current opacity-30" />
-                <div className="mt-8 text-sm font-semibold text-ctp-subtext0">
+                <div className="mt-auto min-h-[72px] text-base font-semibold text-ctp-subtext0 md:text-lg">
                   Notation: <span className="text-ctp-text">{workflowStages[2].notation}</span>
                 </div>
               </article>
