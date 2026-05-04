@@ -14,12 +14,12 @@ class Config(BaseSettings):
     LOG_MAX_BYTES: int = 10_485_760
     LOG_BACKUP_COUNT: int = 5
     BACKEND_CORS_ORIGINS: str = "http://localhost:3000"
-    LLM_PROVIDER: str = "ollama"
+    LLM_PROVIDER: str = "openrouter"
     LLM_TEMPERATURE: float = 0.0
     LLM_TIMEOUT: int = 60
     OPENROUTER_API_KEY: str = ""
     OPENROUTER_URL: str = "https://openrouter.ai/api/v1/chat/completions"
-    OPENROUTER_MODEL: str = "deepseek/deepseek-r1-distill-llama-70b"
+    OPENROUTER_MODEL: str = "openrouter/free"
     OLLAMA_URL: str = "http://localhost:11434/api/generate"
     OLLAMA_MODEL: str = "mistral:latest"
     LMSTUDIO_URL: str = "http://localhost:1234/v1/completions"
