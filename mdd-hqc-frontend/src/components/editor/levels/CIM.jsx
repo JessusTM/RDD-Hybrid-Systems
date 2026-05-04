@@ -7,6 +7,7 @@ import axios from "axios"
 import { Upload, FileText, CheckCircle, Loader2, Trash2 } from "lucide-react"
 import { uploadFile } from "../../../services/file"
 import { getCimMetrics } from "../../../services/metrics"
+import { confirmClear } from "../../../utils/confirmClear"
 
 /**
  * Displays the CIM stage and manages the source file-processing workflow.
@@ -192,7 +193,16 @@ export const CIM = ({ onFileUploaded, onMetricsLoaded, metrics, selectedExample,
    * This handler is used by the panel clear button because resetting the source CIM must
    * also invalidate every later transformation stage.
    */
-  const handleClear = () => {
+  const handleClear = async () => {
+    const isConfirmed = await confirmClear({
+      title: "Clear CIM?",
+      text: "This will remove the current CIM and downstream results.",
+    })
+
+    if (!isConfirmed) {
+      return
+    }
+
     abortProcessing()
     processedExampleRequestRef.current = null
     if (fileInputRef.current) {
@@ -212,12 +222,12 @@ export const CIM = ({ onFileUploaded, onMetricsLoaded, metrics, selectedExample,
           <div className="p-2.5 bg-ctp-surface1 rounded-lg">
             <FileText className="w-8 h-8 text-ctp-blue" />
           </div>
-          <div className="min-w-0 text-left">
-            <h3 className="font-bold text-ctp-text text-2xl">CIM</h3>
-            <p className="text-lg text-[#a0988c] font-semibold hidden xl:block">
-              i* 2.0 (iStar)
-            </p>
-          </div>
+            <div className="min-w-0 text-left">
+              <h3 className="font-bold text-ctp-text text-2xl">CIM</h3>
+              <p className="text-lg text-[#a0988c] font-semibold hidden xl:block">
+                iStar 2.0
+              </p>
+            </div>
         </div>
 
         {file && !errorMessage && (
@@ -228,7 +238,7 @@ export const CIM = ({ onFileUploaded, onMetricsLoaded, metrics, selectedExample,
             <button
               type="button"
               onClick={handleClear}
-              className="rounded-lg border border-ctp-surface0 bg-ctp-crust p-2.5 text-ctp-overlay1 shadow-sm transition-all hover:border-ctp-red/30 hover:bg-ctp-red/20 hover:text-ctp-red"
+              className="rounded-lg border border-ctp-red/30 bg-ctp-red/10 p-2.5 text-ctp-red shadow-sm transition-all hover:border-ctp-red/40 hover:bg-ctp-red/20"
               title="Clear CIM and downstream results"
               aria-label="Clear CIM and downstream results"
             >
@@ -271,7 +281,7 @@ export const CIM = ({ onFileUploaded, onMetricsLoaded, metrics, selectedExample,
             <>
               {/* Upload prompt */}
               <p className="text-[#a0988c] text-xl mb-6 text-center px-6 font-semibold">
-                Upload your i* 2.0 (XML) file here...
+                Upload your iStar 2.0 (XML) file here...
               </p>
 
               <button
