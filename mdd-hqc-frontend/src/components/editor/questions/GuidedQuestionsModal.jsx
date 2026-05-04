@@ -40,22 +40,30 @@ const GuidedQuestionsModal = ({ isOpen, onClose, questions, onContinue }) => {
             Review the questions generated to inspect the semi-automatic transformation from <span className="font-bold text-blue-200">CIM to PIM</span>
           </p>
 
-          {questions.map((q, index) => (
-            <div key={q.id || index} className="mt-6 bg-gray-700 p-4 rounded-lg">
-              <h3 className="text-white font-semibold mb-2">{q.text}</h3>
-              <div className="flex flex-wrap gap-2 mt-3">
-                {q.options?.map((opt, optionIndex) => (
-                  <button
-                    type="button"
-                    key={optionIndex}
-                    className="bg-gray-900 text-white px-3 py-2 rounded hover:bg-blue-600"
-                  >
-                    {opt}
-                  </button>
-                ))}
-              </div>
+          {questions.length === 0 ? (
+            <div className="mt-6 rounded-lg border border-dashed border-gray-600 bg-gray-800/60 p-4">
+              <p className="text-sm text-gray-300">
+                No guided questions were generated for this UVL analysis.
+              </p>
             </div>
-          ))}
+          ) : (
+            questions.map((q, index) => (
+              <div key={q.id || index} className="mt-6 bg-gray-700 p-4 rounded-lg">
+                <h3 className="text-white font-semibold mb-2">{q.text}</h3>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {q.options?.map((opt, optionIndex) => (
+                    <button
+                      type="button"
+                      key={optionIndex}
+                      className="bg-gray-900 text-white px-3 py-2 rounded hover:bg-blue-600"
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))
+          )}
         </div>
 
         <div className="flex justify-end">

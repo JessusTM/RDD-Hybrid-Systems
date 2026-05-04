@@ -1,3 +1,12 @@
 body {
   margin: 0;
 }
+
+/* Bootstrap `.border` uses `--bs-border-color`; override to Catppuccin Mocha (surface0). */
+:root {
+  --bs-border-color: #313244;
+}
+
+.border {
+  border-color: #313244 !important;
+}

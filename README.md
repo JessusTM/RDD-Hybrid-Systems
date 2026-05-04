@@ -7,7 +7,9 @@
     <a href="https://react.dev"><img src="https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React"></a>
     <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src="https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript"></a>
     <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"></a>
-    <a href="https://ollama.com"><img src="https://img.shields.io/badge/Ollama-Mistral-000000?style=for-the-badge&logo=ollama&logoColor=white" alt="Ollama"></a>
+    <a href="https://openrouter.ai"><img src="https://img.shields.io/badge/OpenRouter-LLM%20API-6D28D9?style=for-the-badge" alt="OpenRouter"></a>
+    <a href="https://github.com/astral-sh/uv"><img src="https://img.shields.io/badge/uv-Astral-2E71FF?style=for-the-badge" alt="uv"></a>
+    <a href="https://ollama.com"><img src="https://img.shields.io/badge/Ollama-optional-000000?style=for-the-badge&logo=ollama&logoColor=white" alt="Ollama (optional)"></a>
   </p>
   <p>
     <a href="#need-and-motivation">Need and Motivation</a> ·
@@ -20,10 +22,10 @@
 </div>
 
 <p align="center">
-  <a href="http://200.13.5.22:3000/"><strong><font size="6">Open the Editor</font></strong></a>
+  <a href="http://200.13.5.22:3000/"><strong><font size="7">Open the Editor</font></strong></a>
 </p>
 
-> **Version:** v1.3.0  
+> **Version:** v1.3.2  
 > **Status:** Functional Prototype  
 
 **MDD-HQC** is a model-driven platform for designing hybrid quantum-classical systems. It transforms **iStar 2.0** models into traceable **UVL** and **UML** artifacts enriched with **QuantumUML** stereotypes, with advisory **LLM support**.
@@ -47,7 +49,7 @@ MDD-HQC supports HQC design through a **model-driven flow** from **CIM** to **PI
 Starting from **iStar 2.0** goal models, the platform derives traceable **UVL** and **UML** artifacts enriched with **QuantumUML** stereotypes. Each level constrains the next one, narrowing the space of possible solutions and strengthening **vertical traceability**.
 
 <p align="center">
-  <img src="docs/images/layers.png" alt="MDD-HQC conceptual layers from CIM to PIM to preliminary HQC architecture" width="820">
+  <img src="docs/images/layers.png" alt="MDD-HQC conceptual layers from CIM to PIM to preliminary HQC architecture" width="580">
 </p>
 
 **LLM support** helps identify **information gaps**, **ambiguities**, or **misplaced elements** during model refinement. It is **strictly advisory** and never makes decisions on behalf of the user.

@@ -49,12 +49,12 @@ async def transform_cim_pim(request: PathRequest):
 
         uvl_metrics = UvlMetricsService(uvl).calculate()
 
-        uvl_content = ""
+        output_uvl_content = ""
         if uvl.FILE_NAME.exists():
-            uvl_content = uvl.FILE_NAME.read_text(encoding="utf-8")
+            output_uvl_content = uvl.FILE_NAME.read_text(encoding="utf-8")
 
         logger.info(
-            "CIM-to-PIM transformation completed: input_path=%s, output_uvl=%s, features=%s",
+            "CIM-to-PIM transformation completed: input_path=%s, output_uvl_path=%s, features=%s",
             request.path,
             uvl.FILE_NAME,
             uvl_metrics.get("total_features"),
@@ -62,8 +62,8 @@ async def transform_cim_pim(request: PathRequest):
         return {
             "detail": "Transformación CIM -> PIM completada",
             "input_xml": request.path,
-            "output_uvl": str(uvl.FILE_NAME),
-            "uvl_content": uvl_content,
+            "output_uvl_path": str(uvl.FILE_NAME),
+            "output_uvl_content": output_uvl_content,
             "metrics": {"cim": istar_metrics, "pim": uvl_metrics},
         }
     except Exception as exc:
@@ -110,16 +110,16 @@ async def transform_pim_psm(request: PathRequest):
         plantuml_service = PlantumlService()
         uml_path = plantuml_service.write(uml_model, uml_output)
 
-        uvl_content = ""
+        output_uvl_content = ""
         if uvl.FILE_NAME.exists():
-            uvl_content = uvl.FILE_NAME.read_text(encoding="utf-8")
+            output_uvl_content = uvl.FILE_NAME.read_text(encoding="utf-8")
 
         uml_content = ""
         if uml_path.exists():
             uml_content = uml_path.read_text(encoding="utf-8")
 
         logger.info(
-            "PIM-to-PSM transformation completed: input_path=%s, output_uvl=%s, output_puml=%s, classes=%s",
+            "PIM-to-PSM transformation completed: input_path=%s, output_uvl_path=%s, output_puml=%s, classes=%s",
             request.path,
             uvl.FILE_NAME,
             uml_path,
@@ -128,9 +128,9 @@ async def transform_pim_psm(request: PathRequest):
         return {
             "detail": "Transformación PIM -> PSM completada",
             "input_xml": request.path,
-            "output_uvl": str(uvl.FILE_NAME),
+            "output_uvl_path": str(uvl.FILE_NAME),
             "output_puml": str(uml_path),
-            "uvl_content": uvl_content,
+            "output_uvl_content": output_uvl_content,
             "puml_content": uml_content,
             "metrics": {
                 "cim": istar_metrics,

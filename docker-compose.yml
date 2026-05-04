@@ -8,9 +8,11 @@ services:
       - ./mdd-hqc-backend/app:/app/app
       - ./mdd-hqc-backend/data:/app/data
     environment:
-      OLLAMA_URL: "http://ollama:11434/api/generate"
-    depends_on:
-      - ollama
+      LLM_PROVIDER: "${LLM_PROVIDER:-openrouter}"
+      OPENROUTER_API_KEY: "${OPENROUTER_API_KEY:-}"
+      OPENROUTER_MODEL: "${OPENROUTER_MODEL:-openrouter/free}"
+      OLLAMA_URL: "${OLLAMA_URL:-http://ollama:11434/api/generate}"
+      OLLAMA_MODEL: "${OLLAMA_MODEL:-mistral:latest}"
     networks:
       - appnet
 
@@ -33,13 +35,12 @@ services:
   ollama:
     image: ollama/ollama:latest
     container_name: ollama
-    ports:
-      - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
     networks:
       - appnet
-    entrypoint: ["/bin/sh", "-c", "ollama serve & sleep 5 && ollama pull mistral && tail -f /dev/null"]
+    command: ["serve"]
+    profiles: ["ollama"]
 
 networks:
   appnet:
