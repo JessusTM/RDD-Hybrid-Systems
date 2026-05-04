@@ -182,7 +182,7 @@ export const HomePage = () => {
               className="mb-10 h-auto w-full max-w-[40rem] drop-shadow-2xl"
             />
             <h1 className="mt-2 max-w-6xl text-3xl font-black tracking-tight text-ctp-mauve md:text-5xl md:leading-[1.1]">
-              MDD-HQC: A goal-oriented, model-driven approach to designing hybrid quantum-classical systems.
+              MDD-HQC: A Goal-Oriented and Model-Driven Approach for Hybrid Quantum–Classical Systems
             </h1>
             <p className="mt-8 max-w-3xl text-lg leading-8 text-ctp-subtext0 md:text-xl">
               Understand requirements, structure design decisions, and move from goals to architectural models through a guided workflow.
