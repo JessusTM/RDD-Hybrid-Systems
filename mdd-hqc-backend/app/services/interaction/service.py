@@ -1,5 +1,6 @@
 """Service helpers that run optional LLM-backed interaction analysis on generated UVL."""
 
+import logging
 from typing import Dict, Optional
 
 from app.services.interaction.contracts import InteractionInput, InteractionReport
@@ -7,6 +8,8 @@ from app.models.uvl import UVL
 from app.services.interaction.analyzers.uvl_completeness import UvlCompletenessAnalyzer
 from app.services.interaction.providers.factory import get_provider
 from app.services.interaction.questions import build_questions_from_missing
+
+logger = logging.getLogger(__name__)
 
 
 def run_interaction(
@@ -21,6 +24,14 @@ def run_interaction(
     analyzer = UvlCompletenessAnalyzer(llm_provider)
     analysis = analyzer.analyze(payload)
     questions = build_questions_from_missing(analysis.get("missing", []))
+
+    logger.debug("Interaction analysis result: %s", analysis)
+    logger.info(
+        "Interaction questions generated: provider=%s, question_count=%s",
+        provider or "configured-default",
+        len(questions),
+    )
+
     return InteractionReport(questions=questions, proposals=[])
 
 

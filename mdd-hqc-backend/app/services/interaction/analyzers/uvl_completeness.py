@@ -1,11 +1,14 @@
 """UVL completeness analyzer backed by one pluggable LLM provider."""
 
 import json
+import logging
 import re
 from typing import Dict
 
 from app.services.interaction.contracts import InteractionInput
 from app.services.interaction.providers.base import LLMProvider
+
+logger = logging.getLogger(__name__)
 
 HQC_EXTENDED_FEATURE_MODEL = [
     "Functionality",
@@ -59,21 +62,34 @@ class UvlCompletenessAnalyzer:
     def analyze(self, payload: InteractionInput) -> Dict:
         prompt = PROMPT_TEMPLATE.format(uvl_content=payload.output_uvl_content)
         raw_response = self.provider.generate(prompt)
+        logger.debug("Raw UVL analysis response received from provider: %s", raw_response)
         return self._safe_parse_json(raw_response)
 
     def _safe_parse_json(self, raw: str) -> Dict:
         try:
             parsed = json.loads(raw)
+            logger.debug("LLM response parsed directly as JSON: %s", parsed)
         except Exception:
             match = re.search(r"\{.*\}", raw, re.DOTALL)
             if not match:
+                logger.warning(
+                    "UVL analyzer could not find a JSON object in the LLM response."
+                )
                 return {}
             try:
                 parsed = json.loads(match.group(0))
+                logger.debug("LLM response parsed from extracted JSON block: %s", parsed)
             except Exception:
+                logger.warning(
+                    "UVL analyzer found a JSON-like block but could not parse it."
+                )
                 return {}
 
         if not self._contains_all_required_keys(parsed):
+            logger.warning(
+                "UVL analyzer discarded LLM response because required keys were missing: %s",
+                parsed,
+            )
             return {}
 
         result = self._build_boolean_result(parsed)
@@ -81,6 +97,7 @@ class UvlCompletenessAnalyzer:
         result["missing"] = missing if isinstance(missing, list) else []
         if not result["missing"]:
             result["missing"] = self._collect_missing_groups(result)
+        logger.debug("Normalized UVL completeness analysis result: %s", result)
         return result
 
     def _contains_all_required_keys(self, parsed: Dict) -> bool:
