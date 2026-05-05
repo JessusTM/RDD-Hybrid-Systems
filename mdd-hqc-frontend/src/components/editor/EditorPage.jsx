@@ -97,8 +97,8 @@ export const EditorPage = () => {
    * Applies the CIM-to-PIM response to the editor state.
    */
   const handlePimTransformed = useCallback((data) => {
-    setGeneratedUvlPath(data.output_uvl || null)
-    setUvlContent(data.uvl_content)
+    setGeneratedUvlPath(data.output_uvl_path || null)
+    setUvlContent(data.output_uvl_content)
     setCimMetrics(data.metrics?.cim || cimMetrics)
     setPimMetrics(data.metrics?.pim || null)
   }, [cimMetrics])
@@ -108,7 +108,7 @@ export const EditorPage = () => {
    */
   const handlePsmTransformed = useCallback((data) => {
     setPumlContent(data.puml_content)
-    setUvlContent(data.uvl_content || uvlContent)
+    setUvlContent(data.output_uvl_content || uvlContent)
     setCimMetrics(data.metrics?.cim || cimMetrics)
     setPimMetrics(data.metrics?.pim || pimMetrics)
     setPsmMetrics(data.metrics?.psm || null)
@@ -257,8 +257,8 @@ export const EditorPage = () => {
 
       handlePimTransformed(response)
 
-      if (isAiEnabled && response.output_uvl) {
-        void loadQuestionsForUvl(response.output_uvl, { openModal: true })
+      if (isAiEnabled && response.output_uvl_path) {
+        void loadQuestionsForUvl(response.output_uvl_path, { openModal: true })
       }
     } finally {
       if (transformAbortRef.current === controller) {

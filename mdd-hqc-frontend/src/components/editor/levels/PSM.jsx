@@ -5,6 +5,7 @@
 import { useState } from "react"
 import { Code, CheckCircle, Maximize2, Trash2, X } from "lucide-react"
 import { encode } from "plantuml-encoder"
+import { confirmClear } from "../../../utils/confirmClear"
 
 /**
  * Displays the PSM stage after the backend generates the PlantUML artifact.
@@ -15,6 +16,19 @@ import { encode } from "plantuml-encoder"
 export const PSM = ({ pumlContent, metrics, onClear }) => {
   const hasContent = !!pumlContent
   const [isFullscreen, setIsFullscreen] = useState(false)
+
+  const handleClear = async () => {
+    const isConfirmed = await confirmClear({
+      title: "Clear PSM?",
+      text: "This will remove the generated PSM result.",
+    })
+
+    if (!isConfirmed) {
+      return
+    }
+
+    onClear()
+  }
 
   /**
    * Builds the PlantUML server URL for the generated diagram content.
@@ -77,34 +91,32 @@ export const PSM = ({ pumlContent, metrics, onClear }) => {
             </div>
             <div className="min-w-0 text-left">
               <h3 className="font-bold text-ctp-text text-2xl">PSM</h3>
-              <p className="text-lg text-[#a0988c] font-semibold hidden xl:block">
-                UML with Quantum UML
-              </p>
+              <p className="text-lg text-[#a0988c] font-semibold hidden xl:block">UML and QuantumUML</p>
             </div>
           </div>
 
           {hasContent && (
             <div className="flex items-center gap-2 shrink-0">
-              <button
-                type="button"
-                onClick={() => setIsFullscreen(true)}
-                className="px-3 py-1.5 bg-ctp-blue/20 hover:bg-ctp-blue/30 text-ctp-blue border border-ctp-blue/30 text-sm font-semibold rounded-lg flex items-center gap-1.5 shadow-sm transition-colors"
-                title="View fullscreen"
-              >
-                <Maximize2 className="w-4 h-4" />
-                Fullscreen
-              </button>
               <span className="px-4 py-1.5 border text-base font-semibold rounded-full flex items-center gap-2 shadow-sm bg-[#a6e3a1]/20 border-[#a6e3a1]/30 text-[#a6e3a1]">
                 <CheckCircle className="h-4.5 w-4.5" /> Ready
               </span>
               <button
                 type="button"
-                onClick={onClear}
-                className="rounded-lg border border-ctp-surface0 bg-ctp-crust p-2.5 text-ctp-overlay1 shadow-sm transition-all hover:border-ctp-red/30 hover:bg-ctp-red/20 hover:text-ctp-red"
+                onClick={handleClear}
+                className="rounded-lg border border-ctp-red/30 bg-ctp-red/10 p-2.5 text-ctp-red shadow-sm transition-all hover:border-ctp-red/40 hover:bg-ctp-red/20"
                 title="Clear PSM result"
                 aria-label="Clear PSM result"
               >
                 <Trash2 className="h-4.5 w-4.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsFullscreen(true)}
+                className="rounded-lg border border-ctp-blue/30 bg-ctp-blue/10 p-2.5 text-ctp-blue shadow-sm transition-colors hover:bg-ctp-blue/20"
+                title="View fullscreen"
+                aria-label="View fullscreen"
+              >
+                <Maximize2 className="h-4.5 w-4.5" />
               </button>
             </div>
           )}
