@@ -317,7 +317,7 @@ export const HomePage = () => {
                   <div className={`mt-6 text-sm font-black uppercase tracking-[0.35em] ${eyebrowColor}`}>{eyebrow}</div>
                   <h3 className="mt-4 text-3xl font-black text-ctp-text">{title}</h3>
                   <p className="mt-4 min-h-[72px] text-lg leading-8 text-ctp-subtext0">{description}</p>
-                  <div className={`mt-4 border-t-2 border-ctp-surface0 pt-3 text-sm font-bold ${noteColor}`}>Why: {note}</div>
+                  <div className={`mt-4 border-t-2 border-ctp-surface0 pt-3 text-base font-bold ${noteColor}`}>Why: {note}</div>
                 </article>
               ))}
             </div>
