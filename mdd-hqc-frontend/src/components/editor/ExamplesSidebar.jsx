@@ -22,6 +22,8 @@ export const ExamplesSidebar = ({ isOpen, onClose, onSelectExample }) => {
       id: "chileespres",
       name: "ChileEsPres",
       url: "/examples/ChileEsPres.xml",
+      previewImage: "/images/ChileEsPres.png",
+      previewAlt: "ChileEsPres example overview",
     })
     onClose?.()
   }
@@ -87,19 +89,33 @@ export const ExamplesSidebar = ({ isOpen, onClose, onSelectExample }) => {
                 <div>
                   <div className="text-3xl font-bold text-ctp-text">ChileEsPres</div>
                   <p className="mt-3 text-xl leading-8 text-[#a0988c]">
-                    Enterprise route-planning scenario with a quantum annealing module designed to produce improved routing plans for deliveries.
+                    Enterprise route-planning scenario with a quantum annealing module for improved delivery routes.
                   </p>
                 </div>
                 <ChevronRight className="mt-1 h-6 w-6 shrink-0 text-[#a0988c] transition-transform group-hover:translate-x-1 group-hover:text-ctp-text" />
               </div>
 
-              <div className="mt-5 flex items-center gap-3">
+              <div className="mt-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-lg border border-ctp-mauve/30 bg-ctp-mauve/10 px-3 py-1 text-base font-bold uppercase tracking-wide text-ctp-mauve">
                   i* 2.0
                 </span>
                 <span className="rounded-lg border border-ctp-blue/30 bg-ctp-blue/10 px-3 py-1 text-base font-bold uppercase tracking-wide text-ctp-blue">
                   CIM
                 </span>
+                <span className="rounded-lg border border-ctp-green/30 bg-ctp-green/10 px-3 py-1 text-base font-bold uppercase tracking-wide text-ctp-green">
+                  Transport
+                </span>
+                <span className="rounded-lg border border-ctp-yellow/30 bg-ctp-yellow/10 px-3 py-1 text-base font-bold uppercase tracking-wide text-ctp-yellow">
+                  Logistics
+                </span>
+              </div>
+
+              <div className="mt-4 overflow-hidden rounded-2xl border border-ctp-surface1 bg-white/95 p-2 shadow-inner shadow-black/5">
+                <img
+                  src="/images/ChileEsPres.png"
+                  alt="ChileEsPres example overview"
+                  className="h-auto w-full rounded-xl object-contain"
+                />
               </div>
             </button>
           </div>

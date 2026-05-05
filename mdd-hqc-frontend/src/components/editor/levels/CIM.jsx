@@ -4,7 +4,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import axios from "axios"
-import { Upload, FileText, CheckCircle, Loader2, Trash2 } from "lucide-react"
+import { Upload, FileText, CheckCircle, Loader2, Maximize2, Trash2, X } from "lucide-react"
 import { uploadFile } from "../../../services/file"
 import { getCimMetrics } from "../../../services/metrics"
 import { confirmClear } from "../../../utils/confirmClear"
@@ -23,6 +23,7 @@ export const CIM = ({ onFileUploaded, onMetricsLoaded, metrics, selectedExample,
   const [errorMessage, setErrorMessage] = useState("")
   const [infoMessage, setInfoMessage] = useState("")
   const [loading, setLoading] = useState(false)
+  const [isExamplePreviewOpen, setIsExamplePreviewOpen] = useState(false)
   const fileInputRef = useRef(null)
   const processedExampleRequestRef = useRef(null)
 
@@ -213,9 +214,36 @@ export const CIM = ({ onFileUploaded, onMetricsLoaded, metrics, selectedExample,
   }
 
   const hasUploadedResult = file && !errorMessage && !loading && metrics
+  const hasExamplePreview = Boolean(selectedExample?.previewImage && file?.name === `${selectedExample.name}.xml`)
 
   return (
     <div className="group flex flex-col h-full bg-ctp-surface0 rounded-xl shadow-xl border-2 border-ctp-surface2 transition-all duration-300 hover:border-ctp-surface1">
+      {isExamplePreviewOpen && hasExamplePreview && (
+        <div
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-ctp-base/90 p-6 backdrop-blur-sm"
+          onClick={() => setIsExamplePreviewOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-6xl overflow-hidden rounded-[2rem] border border-ctp-surface1 bg-ctp-mantle p-4 shadow-2xl shadow-black/30"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setIsExamplePreviewOpen(false)}
+              className="absolute right-4 top-4 z-10 rounded-xl bg-ctp-surface0/90 p-2 text-ctp-text transition-colors hover:bg-ctp-surface1"
+              aria-label="Close example preview"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            <img
+              src={selectedExample.previewImage}
+              alt={selectedExample.previewAlt || `${selectedExample.name} preview`}
+              className="max-h-[85vh] w-full rounded-[1.5rem] object-contain"
+            />
+          </div>
+        </div>
+      )}
+
       {/* Panel header */}
       <div className="px-4 py-5 border-b border-ctp-surface1 bg-ctp-surface0/20 rounded-t-xl flex items-center justify-between shrink-0 h-20">
         <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -250,7 +278,7 @@ export const CIM = ({ onFileUploaded, onMetricsLoaded, metrics, selectedExample,
 
       {/* Upload state */}
       <div className="flex-1 p-0 overflow-hidden flex flex-col relative bg-ctp-crust">
-        <div className="flex-1 flex flex-col items-center justify-center m-6 py-10 rounded-lg bg-ctp-mantle/50">
+        <div className={`flex-1 flex flex-col items-center m-6 rounded-lg bg-ctp-mantle/50 ${hasExamplePreview ? "justify-start py-4" : "justify-center py-10"}`}>
           <input
             type="file"
             ref={fileInputRef}
@@ -262,20 +290,40 @@ export const CIM = ({ onFileUploaded, onMetricsLoaded, metrics, selectedExample,
           {hasUploadedResult ? (
             <>
               {/* Success state */}
-              <div className="flex flex-col items-center justify-center px-6 text-center">
-              <div className="mb-2 rounded-full bg-ctp-green/10 p-3 text-ctp-green">
-                <CheckCircle className="h-14 w-14" />
-              </div>
-              <h4 className="text-3xl font-bold uppercase tracking-[0.16em] text-ctp-green">
-                File Uploaded
-              </h4>
-              <p className="mt-2 max-w-[240px] truncate text-center font-mono text-2xl text-ctp-text" title={file.name}>
-                {file.name}
-              </p>
-              <p className="mt-2 text-lg font-semibold text-ctp-green/90">
-                Metrics calculated
-              </p>
-              </div>
+              <div className={`flex flex-col items-center px-4 text-center ${hasExamplePreview ? "h-full w-full justify-start" : "justify-center"}`}>
+                <div className="mb-1 rounded-full bg-ctp-green/10 p-2.5 text-ctp-green">
+                  <CheckCircle className="h-12 w-12" />
+                </div>
+                <h4 className="text-[2rem] font-bold uppercase tracking-[0.14em] text-ctp-green">
+                  File Uploaded
+                </h4>
+                {hasExamplePreview ? (
+                  <div className="relative mt-2 flex-1 w-full min-h-0 overflow-hidden rounded-2xl border border-ctp-surface1 bg-white/95 p-2 shadow-inner shadow-black/5">
+                    <button
+                      type="button"
+                      onClick={() => setIsExamplePreviewOpen(true)}
+                      className="absolute right-4 top-4 z-10 rounded-xl border border-ctp-mauve/30 bg-ctp-mauve/85 p-2.5 text-ctp-base shadow-lg transition-colors hover:bg-ctp-pink"
+                      aria-label="Enlarge preview"
+                    >
+                      <Maximize2 className="h-4 w-4" />
+                    </button>
+                    <img
+                      src={selectedExample.previewImage}
+                      alt={selectedExample.previewAlt || `${selectedExample.name} preview`}
+                      className="h-full w-full rounded-xl object-contain"
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <p className="mt-2 max-w-[240px] truncate text-center font-mono text-2xl text-ctp-text" title={file.name}>
+                      {file.name}
+                    </p>
+                    <p className="mt-2 text-lg font-semibold text-ctp-green/90">
+                      Metrics calculated
+                    </p>
+                  </>
+                )}
+               </div>
             </>
           ) : (
             <>
