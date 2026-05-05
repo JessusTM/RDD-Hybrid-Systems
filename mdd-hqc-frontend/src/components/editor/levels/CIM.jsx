@@ -267,7 +267,7 @@ export const CIM = ({ onFileUploaded, onMetricsLoaded, metrics, selectedExample,
                 <CheckCircle className="h-14 w-14" />
               </div>
               <h4 className="text-3xl font-bold uppercase tracking-[0.16em] text-ctp-green">
-                Archivo Subido
+                File Uploaded
               </h4>
               <p className="mt-2 max-w-[240px] truncate text-center font-mono text-2xl text-ctp-text" title={file.name}>
                 {file.name}
