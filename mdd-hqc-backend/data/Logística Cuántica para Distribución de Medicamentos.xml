@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<istar>
+  <actor id="actor_distribuidor" name="Distribuidor Logístico">
+    <goal id="goal_optimizar_entrega" name="Optimizar Tiempos de Entrega Nacional" />
+    
+    <task id="task_ruteo_dinamico" name="Calcular Rutas de Vehículos en Tiempo Real">
+      <description>Cálculo de rutas óptimas considerando tráfico y ventanas de tiempo mediante optimización combinatoria.</description>
+    </task>
+
+    <quality id="qual_precision" name="Máxima Precisión en Predicción de Demanda" />
+
+    <task id="task_sincronizar_inventario" name="Sincronizar Inventario con Centros Médicos" />
+
+    <dependency id="dep_1" name="Solicitar Computo">
+      <depender actorRef="actor_distribuidor" />
+      <dependee actorRef="actor_servidor_cuantico" />
+    </dependency>
+  </actor>
+
+  <actor id="actor_servidor_cuantico" name="Proveedor de Cómputo Cuántico">
+    <task id="task_ejecutar_solver" name="Ejecutar Solver Cuántico" />
+  </actor>
+
+  <ielementLink id="link_1" type="refinement">
+    <target elementRef="task_ruteo_dinamico" />
+    <source elementRef="goal_optimizar_entrega" />
+  </ielementLink>
+</istar>

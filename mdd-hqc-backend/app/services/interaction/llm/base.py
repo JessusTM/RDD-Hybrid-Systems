@@ -14,7 +14,7 @@ class LLMInterface(ABC):
     """
 
     @abstractmethod
-    def analyze_istar_elements(self, elements: List[CimNode]) -> Dict:
+    async def analyze_istar_elements(self, elements: List[CimNode]) -> Dict:
         """Analyzes iStar elements and returns the HQC evidence signals.
 
         This method is called by the LLM interaction engine when it needs a provider to

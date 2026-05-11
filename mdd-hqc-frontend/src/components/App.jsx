@@ -68,17 +68,20 @@ export const App = () => {
   }, [])
 
   useEffect(() => {
-    const handlePageHide = () => {
-      abortInteractionRequests()
-    }
+  const handleBeforeUnload = () => {
+    console.log("Cierre/Recarga detectado: Abortando peticiones activas...");
+    abortInteractionRequests();
+  };
 
-    window.addEventListener("pagehide", handlePageHide)
+  window.addEventListener("beforeunload", handleBeforeUnload);
+  window.addEventListener("pagehide", handleBeforeUnload);
 
-    return () => {
-      window.removeEventListener("pagehide", handlePageHide)
-      abortInteractionRequests()
-    }
-  }, [abortInteractionRequests])
+  return () => {
+    window.removeEventListener("beforeunload", handleBeforeUnload);
+    window.removeEventListener("pagehide", handleBeforeUnload);
+    abortInteractionRequests(); // Se hace una limpieza al desmontar el componente
+  };
+  }, [abortInteractionRequests]);
 
   /**
    * Stores the uploaded file path and clears downstream results tied to the previous run.

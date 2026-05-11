@@ -153,7 +153,6 @@ class OllamaClient(LLMInterface):
             "Quantum_HW_constraint",
         ]
 
-        # 👇 Aquí añades tu chequeo
         if not all(k in parsed for k in keys):
             logger.warning(
                 "JSON no contiene todas las claves esperadas: %s", parsed.keys()

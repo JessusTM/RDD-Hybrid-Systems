@@ -11,7 +11,7 @@ class InteractionEngine(Protocol):
     expose the same `run` entry point.
     """
 
-    def run(self, payload: InteractionInput) -> InteractionReport:
+    async def run(self, payload: InteractionInput) -> InteractionReport:
         """Runs one interaction pass and returns the resulting report.
 
         This method is the common entry point used by the interaction service when it

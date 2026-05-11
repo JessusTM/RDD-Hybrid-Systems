@@ -1,5 +1,6 @@
 """Service helpers that select and run the backend interaction engines."""
 
+import asyncio
 from typing import Dict
 from app.models.llm_contract import InteractionInput, InteractionReport
 from app.services.interaction.llm_client import LLMInteractionEngine
@@ -12,42 +13,42 @@ from app.models.uvl import UVL
 # Functions below select the interaction engine and apply the resulting user decisions.
 
 
-def get_interaction_engine(provider: str = "ollama") -> object:
+async def get_interaction_engine(provider: str = None) -> object:
     """Returns the interaction engine that matches the requested provider.
 
-    This helper centralizes engine selection so the rest of the interaction flow can use
-    one shared entry point for rule-based and LLM-backed execution.
+    CUIDADO: Se ha cambiado el default a None para que la factory decida 
+    basándose en el archivo .env si no se especifica uno.
     """
 
     if provider == "rule_based":
         return RuleBasedInteractionEngine()
 
-    if provider in ["ollama", "lmstudio"]:
+    if provider is None or provider in ["ollama", "lmstudio", "openrouter"]:
         llm_client = get_llm_client(provider)
         return LLMInteractionEngine(llm_client)
 
     return RuleBasedInteractionEngine()
 
 
-def run_interaction(
-    payload: InteractionInput, provider: str = "ollama"
+async def run_interaction(
+    payload: InteractionInput, provider: str = None
 ) -> InteractionReport:
     """Runs the interaction flow with the selected provider and returns its report.
 
-    This helper keeps the orchestration step small by combining engine resolution and
-    report generation in one call used by the API layer.
+    Se elimina el hardcode de 'openrouter' para permitir flexibilidad total.
     """
+    try:
+        engine = await get_interaction_engine(provider)
+        
+        return await engine.run(payload)
 
-    engine = get_interaction_engine(provider)
-    return engine.run(payload)
+    except asyncio.CancelledError:
+        print(f"DEBUG: [Service] Cancelando ejecución de interacción para el proveedor: {provider}")
+        raise
 
 
 def apply_user_answers(uvl: UVL, answers: Dict) -> str:
-    """Applies the provided answers to the UVL model and returns the saved text.
-
-    This helper is used after clarification so the selected answers can be reflected in
-    the UVL draft before the updated file is returned to the caller.
-    """
+    """Applies the provided answers to the UVL model and returns the saved text."""
 
     for block, value in answers.items():
         category = (
