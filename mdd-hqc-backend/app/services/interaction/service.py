@@ -2,6 +2,7 @@
 
 import logging
 from typing import Dict, Optional
+from contextvars import ContextVar
 
 from app.services.interaction.contracts import InteractionInput, InteractionReport
 from app.models.uvl import UVL
@@ -10,6 +11,8 @@ from app.services.interaction.providers.factory import get_provider
 from app.services.interaction.questions import build_questions_from_missing
 
 logger = logging.getLogger(__name__)
+
+cancellation_context: ContextVar[dict] = ContextVar("cancellation_context", default=None)
 
 
 def run_interaction(
@@ -20,9 +23,19 @@ def run_interaction(
     This helper keeps provider selection, UVL analysis, and question generation in one
     shared entry point used by the API layer.
     """
+    ctx = cancellation_context.get()
+    if ctx and ctx.get("is_cancelled"):
+        logger.warning("Interaction analysis cancelled before engine execution.")
+        raise RuntimeError("Operation cancelled by user.")
+
     llm_provider = get_provider(provider)
     analyzer = UvlCompletenessAnalyzer(llm_provider)
     analysis = analyzer.analyze(payload)
+    
+    if ctx and ctx.get("is_cancelled"):
+        logger.warning("Interaction analysis cancelled after engine execution.")
+        raise RuntimeError("Operation cancelled by user.")
+
     questions = build_questions_from_missing(analysis.get("missing", []))
 
     logger.debug("Interaction analysis result: %s", analysis)
@@ -42,5 +55,5 @@ def apply_user_answers(uvl: UVL, answers: Dict) -> str:
     current phase, where the interaction module only analyzes artifacts.
     """
     raise NotImplementedError(
-        "Applying user answers back into the UVL is not implemented in this phase."
+        "Applying user answers back into the UVL is not implemented..."
     )
