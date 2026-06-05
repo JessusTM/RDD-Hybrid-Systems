@@ -8,56 +8,59 @@ features
                 fastDelivery "true"
                 optimalResourceUsage "true"
             }
-            # actor: Route Planning System
-            GenerateRoutePlan
-            {
-                kind "task"
-            }
-                mandatory
-                    # actor: Route Planning System
-                    NationalMap
-                    {
-                        kind "resource"
-                    }
-                    # actor: Route Planning System
-                    VehicleFleet
-                    {
-                        kind "resource"
-                    }
-                    # actor: Route Planning System
-                    CurrentDemand
-                    {
-                        kind "resource"
-                    }
-                    # actor: Route Planning System
-                    DetermineRequiredComputingType
-                    {
-                        kind "task"
-                    }
-                        or
-                            # actor: Route Planning System
-                            # contribution: hurt -> EfficientResourceUsage
-                            # contribution: hurt -> ComputationTime
-                            # contribution: break -> ScalabilityUnderHighDemand
-                            # contribution: make -> RoutePlanQuality
-                            ExecuteGraphAlgorithm
-                            {
-                                kind "task"
-                            }
-                                mandatory
-                                    # actor: Route Planning System
-                                    ClassicalComputer
-                                    {
-                                        kind "resource"
-                                    }
-                            # actor: Route Planning System
-                            PrepareAndRequestQuantumComputation
-                            {
-                                kind "task"
-                            }
     Algorithm
+        Classical
+            mandatory
+                # actor: Route Planning System
+                # contribution: hurt -> EfficientResourceUsage
+                # contribution: hurt -> ComputationTime
+                # contribution: break -> ScalabilityUnderHighDemand
+                # contribution: make -> RoutePlanQuality
+                ExecuteGraphAlgorithm
+                {
+                    kind "task"
+                }
+                    mandatory
+                        # actor: Route Planning System
+                        ClassicalComputer
+                        {
+                            kind "resource"
+                        }
+                    or
+                        # actor: Route Planning System
+                        DetermineRequiredComputingType
+                        {
+                            kind "task"
+                        }
+                            mandatory
+                                # actor: Route Planning System
+                                GenerateRoutePlan
+                                {
+                                    kind "task"
+                                }
+                                    mandatory
+                                        # actor: Route Planning System
+                                        NationalMap
+                                        {
+                                            kind "resource"
+                                        }
+                                        # actor: Route Planning System
+                                        VehicleFleet
+                                        {
+                                            kind "resource"
+                                        }
+                                        # actor: Route Planning System
+                                        CurrentDemand
+                                        {
+                                            kind "resource"
+                                        }
         Quantum
             mandatory
+                # actor: Route Planning System
+                PrepareAndRequestQuantumComputation
+                {
+                    kind "task"
+                }
                 # actor: Quantum Module
                 ExecuteQuantumAnnealingAlgorithm
                 {

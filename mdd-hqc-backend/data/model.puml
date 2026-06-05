@@ -1,38 +1,39 @@
 @startuml
-title MDD-HQC
-class "ExecuteQuantumAnnealingAlgorithm" as C1 <<Quantum>> {
-  QuantumComputer : String
-  QuantumComputingInstance : String
+class "CompareModels" as C1 {
 }
 note right of C1
-  mandatory: QuantumComputer, QuantumComputingInstance
-  actor: Quantum Module
+  actor: Q-TradeX
 end note
-class "GenerateRoutePlan" as C2 <<Quantum>> {
-  NationalMap : String
-  VehicleFleet : String
-  CurrentDemand : String
-  ExecuteGraphAlgorithm() : void
-  DetermineRequiredComputingType() : void
-  PrepareAndRequestQuantumComputation() : void
+class "LogisticRegression" as C2 {
 }
-note right of C2
-  mandatory: NationalMap, VehicleFleet, CurrentDemand, DetermineRequiredComputingType
-  actor: Route Planning System
-  contribution: hurt -> EfficientResourceUsage
-  contribution: hurt -> ComputationTime
-  contribution: break -> ScalabilityUnderHighDemand
-  contribution: make -> RoutePlanQuality
-  ExecuteGraphAlgorithm(): mandatory: ClassicalComputer
-  DetermineRequiredComputingType(): or: ExecuteGraphAlgorithm, PrepareAndRequestQuantumComputation
-end note
-class "PerformDelivery" as C3 {
-  fastDelivery : String = true
-  optimalResourceUsage : String = true
+class "Middleware_API" as C3 <<QuantumDriver>> {
 }
 note right of C3
-  actor: ChileEsPres
+  quantum_hw_constraint: NISQ
+  quantum_hw_constraint: FourQubits
 end note
-C2 ..> C1 : requires
-C3 ..> C2 : requires
+class "ProvideQuantumPrediction" as C4 {
+  QuantumInput : String
+}
+note right of C4
+  mandatory: QuantumInput
+  actor: Quantum Module
+end note
+class "UnderstandModelPerformance" as C5 {
+  DefineExperiment() : void
+}
+note right of C5
+  mandatory: DefineExperiment
+  actor: User
+end note
+class "VQC" as C6 <<Quantum>> {
+}
+note right of C6
+  quantum_hw_constraint: NISQ
+  quantum_hw_constraint: FourQubits
+end note
+C5 ..> C1 : requires
+C1 ..> C4 : requires
+C4 ..> C6 : requires
+C6 ..> C3 : requires
 @enduml
