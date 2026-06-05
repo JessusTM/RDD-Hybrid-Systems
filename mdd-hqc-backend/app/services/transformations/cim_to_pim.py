@@ -326,7 +326,7 @@ class CimToPim:
             endpoints = self._get_link_endpoints(refinement)
             if endpoints is None:
                 continue
-            parent_id, child_id = endpoints
+            child_id, parent_id = endpoints
 
             relation = (refinement.get("value") or "").strip().lower()
 
