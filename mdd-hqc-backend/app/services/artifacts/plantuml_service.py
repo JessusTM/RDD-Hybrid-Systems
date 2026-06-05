@@ -338,10 +338,6 @@ def render(model: UmlModel) -> str:
     lines: list[str] = []
     lines.append("@startuml")
 
-    title = _clean_line(model.name)
-    if title:
-        lines.append(f"title {title}")
-
     for note in model.notes:
         text = _clean_line(note)
         if text:
