@@ -61,19 +61,15 @@ async def get_functionality_names(request: PathRequest):
     
 @router.post("/answers")
 async def save_user_answers(request: AnswerRequest):
-    """Applies user-selected answers to the UVL model and returns the updated content."""
-    uvl_path = Path(request.path)
-    if not uvl_path.exists():
-        raise HTTPException(status_code=404, detail=f"No se encontró UVL en {uvl_path}")
-
+    """Solo imprime las respuestas recibidas sin actualizar el UVL."""
     try:
-        uvl = UVL(file_path=str(uvl_path))
-        updated_content = apply_user_answers(uvl, request.answers)
+        # Mostrar en consola lo que llega
+        print("Respuestas recibidas:", request.answers)
 
         return {
-            "detail": "Respuestas aplicadas exitosamente",
-            "output_uvl": str(UVL.FILE_NAME),
-            "uvl_content": updated_content
+            "detail": "Respuestas recibidas correctamente",
+            "answers": request.answers,
+            "uvl_content": Path(request.path).read_text(encoding="utf-8")
         }
 
     except Exception as exc:
