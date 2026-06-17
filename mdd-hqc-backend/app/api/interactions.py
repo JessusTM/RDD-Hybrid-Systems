@@ -10,6 +10,7 @@ from app.api.schemas.path import PathRequest
 from app.services.interaction.contracts import InteractionInput, InteractionReport
 from app.services.artifacts.uvl_service import UvlService
 from app.services.interaction.service import run_interaction, cancellation_context
+from app.services.interaction.security import security_shield
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/interactions", tags=["interactions"])
@@ -23,14 +24,36 @@ async def get_interaction_report(request: PathRequest, fastapi_request: Request)
     caller can inspect pending questions or proposals.
     """
     uvl_path = Path(request.path)
+    
+    client_ip = fastapi_request.client.host if fastapi_request.client else "127.0.0.1"
+    endpoint_name = "/interactions/report"
+    is_allowed = security_shield.check_request(ip=client_ip, endpoint=endpoint_name, path=str(uvl_path))
+
+    if not is_allowed:
+        raise HTTPException(status_code=429, detail="Too Many Requests.")
+
     if not uvl_path.exists():
-        raise HTTPException(status_code=404, detail=f"No se encontró UVL en {uvl_path}")
+        raise HTTPException(status_code=404, detail=f"No se encontró UVL")
+
+    client_ip = fastapi_request.client.host if fastapi_request.client else "127.0.0.1"
+    endpoint_name = "/interactions/report"
+
+    is_allowed = security_shield.check_request(
+        ip=client_ip, 
+        endpoint=endpoint_name, 
+        path=str(uvl_path)
+    )
+
+    if not is_allowed:
+        raise HTTPException(
+            status_code=429, 
+            detail="Too Many Requests. Límite de frecuencia excedido o solicitud duplicada inmediata."
+        )
 
     ctx = {"is_cancelled": False}
     cancellation_context.set(ctx)
 
     try:
-        output_uvl_content = uvl_path.read_text(encoding="utf-8")
         payload = InteractionInput(
             output_uvl_path=str(uvl_path),
             output_uvl_content=output_uvl_content,
@@ -77,4 +100,3 @@ async def get_functionality_names(request: PathRequest):
 
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
-    
