@@ -1,3 +1,5 @@
+import {sendAnswers} from "../../../services/questions";
+import { useState } from "react";
 /**
  * Guided questions modal used by the AI-assisted CIM-to-PIM interaction flow.
  */
@@ -8,7 +10,24 @@
  * This component is used by the main application when guided interaction is available so
  * the user can review the generated questions in a dedicated modal view.
  */
-const GuidedQuestionsModal = ({ isOpen, onClose, questions, onContinue }) => {
+const GuidedQuestionsModal = ({ isOpen, onClose, questions, onContinue, uvlPath }) => {
+  const [answers, setAnswers] = useState({});
+
+  const handleSelect = (questionId, option) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: option }));
+  }
+
+  const handleSubmit = async () => {
+    try {
+      const result = await sendAnswers(uvlPath, answers);
+      console.log("Respuestas guardadas:", result);
+      onContinue(result);
+
+    } catch (error) {
+      console.error("Error submitting answers:", error);
+    }
+  }
+
   if (!isOpen) return null
 
   return (
@@ -55,7 +74,13 @@ const GuidedQuestionsModal = ({ isOpen, onClose, questions, onContinue }) => {
                     <button
                       type="button"
                       key={optionIndex}
-                      className="bg-gray-900 text-white px-3 py-2 rounded hover:bg-blue-600"
+                      onClick={() => handleSelect(q.id, opt)}
+                      className={`px-3 py-2 rounded
+                        ${
+                          answers[q.id] === opt
+                            ? "bg-blue-600 text-white"
+                            : "bg-gray-600 text-gray-300 hover:bg-gray-500"
+                        }`}
                     >
                       {opt}
                     </button>
@@ -69,7 +94,7 @@ const GuidedQuestionsModal = ({ isOpen, onClose, questions, onContinue }) => {
         <div className="flex justify-end">
           <button
             type="button"
-            onClick={onContinue}
+            onClick={handleSubmit}
             className="bg-gray-700 text-white px-4 py-2 rounded"
           >
             Continue

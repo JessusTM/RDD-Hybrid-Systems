@@ -395,6 +395,7 @@ export const EditorPage = () => {
               onClose={handleQuestionsModalClose}
               questions={questions}
               onContinue={handleContinueWithQuestions}
+              uvlPath={generatedUvlPath}
             />
           ) : (
             <QuestionsModal isOpen={isQuestionsModalOpen} onClose={handleQuestionsModalClose}>

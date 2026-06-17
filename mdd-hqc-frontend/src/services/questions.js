@@ -29,9 +29,9 @@ export const fetchQuestions = async (path, options = {}) => {
  * This service exists so question-answer submission can stay reusable and separate from
  * the modal components that collect the answers.
  */
-export const sendAnswers = async (answers) => {
+export const sendAnswers = async (path, answers) => {
   try {
-    const response = await axios.post(`${API_BASE}/answers`, { answers });
+    const response = await axios.post(`${API_BASE}/answers`, { path, answers });
     return response.data;
   } catch (error) {
     console.error("Error sending answers:", error);
