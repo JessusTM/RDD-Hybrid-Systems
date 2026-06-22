@@ -67,7 +67,9 @@ def _load_uvl_from_file(uvl_path: Path) -> UVL:
 
     def parent_for(indent: int) -> str | None:
         candidates = [
-            group_indent for group_indent in group_parent_by_indent if group_indent < indent
+            group_indent
+            for group_indent in group_parent_by_indent
+            if group_indent < indent
         ]
         if candidates:
             return group_parent_by_indent[max(candidates)]
@@ -272,7 +274,17 @@ async def transform_pim_psm(request: PathRequest):
     try:
         uvl_path = Path(request.path)
         if not uvl_path.exists():
-            raise HTTPException(status_code=404, detail=f"No se encontró UVL en {uvl_path}")
+            raise HTTPException(
+                status_code=404, detail=f"No se encontró UVL en {uvl_path}"
+            )
+        if uvl_path.suffix.lower() != ".uvl":
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    "La transformación PIM -> PSM requiere un archivo .uvl. "
+                    f"Se recibió: {uvl_path.name}"
+                ),
+            )
 
         uvl = _load_uvl_from_file(uvl_path)
         uvl_metrics = UvlMetricsService(uvl).calculate()

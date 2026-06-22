@@ -368,6 +368,7 @@ export const EditorPage = () => {
         <div className="mb-8">
           <Filter
             uploadedFilePath={uploadedFilePath}
+            generatedUvlPath={generatedUvlPath}
             uvlContent={uvlContent}
             onTransformCimToPim={runCimToPimTransformation}
             onTransformPimToPsm={handlePsmTransformed}
