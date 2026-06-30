@@ -15,6 +15,7 @@ import GuidedQuestionsModal from "./questions/GuidedQuestionsModal"
 import QuestionsModal from "./questions/QuestionsModal"
 import { transformCimToPim } from "../../services/transformations"
 import { fetchQuestions } from "../../services/questions"
+import ModelIntegrationDiffModal from "./diff/ModelIntegrationDiffModal"
 
 /**
  * Keeps the full editor workflow synchronized across uploads, transformations, and modals.
@@ -37,6 +38,7 @@ export const EditorPage = () => {
   const [questions, setQuestions] = useState([])
   const [questionsStatus, setQuestionsStatus] = useState("idle")
   const [questionsError, setQuestionsError] = useState("")
+  const [isModelIntegrationModalOpen, setIsModelIntegrationModalOpen] = useState(false)
 
   /**
    * Clears the guided-interaction state kept after UVL generation.
@@ -298,6 +300,7 @@ export const EditorPage = () => {
    */
   const handleContinueWithQuestions = () => {
     setIsQuestionsModalOpen(false)
+    setIsModelIntegrationModalOpen(true)
   }
 
   /**
@@ -458,6 +461,10 @@ export const EditorPage = () => {
             />
           </div>
         </div>
+         <ModelIntegrationDiffModal
+          isOpen={isModelIntegrationModalOpen}
+          onClose={() => setIsModelIntegrationModalOpen(false)}
+        />
       </main>
     </div>
   )

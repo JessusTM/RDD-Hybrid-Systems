@@ -97,7 +97,7 @@ const GuidedQuestionsModal = ({ isOpen, onClose, questions, onContinue, uvlPath 
             onClick={handleSubmit}
             className="bg-gray-700 text-white px-4 py-2 rounded"
           >
-            Continue
+            Close
           </button>
         </div>
       </div>
