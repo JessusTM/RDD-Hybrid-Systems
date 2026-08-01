@@ -13,6 +13,7 @@ import { PIM } from "./levels/PIM"
 import { PSM } from "./levels/PSM"
 import GuidedQuestionsModal from "./questions/GuidedQuestionsModal"
 import QuestionsModal from "./questions/QuestionsModal"
+import ModelIntegrationDiffModal from "./diff/ModelIntegrationDiffModal"
 import { transformCimToPim } from "../../services/transformations"
 import { fetchQuestions } from "../../services/questions"
 
@@ -37,6 +38,7 @@ export const EditorPage = () => {
   const [questions, setQuestions] = useState([])
   const [questionsStatus, setQuestionsStatus] = useState("idle")
   const [questionsError, setQuestionsError] = useState("")
+  const [isModelIntegrationModalOpen, setIsModelIntegrationModalOpen] = useState(false)
 
   /**
    * Clears the guided-interaction state kept after UVL generation.
@@ -46,6 +48,7 @@ export const EditorPage = () => {
     setQuestionsStatus("idle")
     setQuestionsError("")
     setIsQuestionsModalOpen(false)
+    setIsModelIntegrationModalOpen(false)
   }, [])
 
   /**
@@ -298,6 +301,7 @@ export const EditorPage = () => {
    */
   const handleContinueWithQuestions = () => {
     setIsQuestionsModalOpen(false)
+    setIsModelIntegrationModalOpen(true)
   }
 
   /**
@@ -368,6 +372,7 @@ export const EditorPage = () => {
         <div className="mb-8">
           <Filter
             uploadedFilePath={uploadedFilePath}
+            generatedUvlPath={generatedUvlPath}
             uvlContent={uvlContent}
             onTransformCimToPim={runCimToPimTransformation}
             onTransformPimToPsm={handlePsmTransformed}
@@ -458,6 +463,11 @@ export const EditorPage = () => {
             />
           </div>
         </div>
+
+        <ModelIntegrationDiffModal
+          isOpen={isModelIntegrationModalOpen}
+          onClose={() => setIsModelIntegrationModalOpen(false)}
+        />
       </main>
     </div>
   )

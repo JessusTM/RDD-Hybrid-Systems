@@ -10,3 +10,27 @@ body {
 .border {
   border-color: #313244 !important;
 }
+
+.themed-scrollbar {
+  scrollbar-color: #45475a #181825;
+  scrollbar-width: thin;
+}
+
+.themed-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.themed-scrollbar::-webkit-scrollbar-track {
+  background: #181825;
+  border-radius: 999px;
+}
+
+.themed-scrollbar::-webkit-scrollbar-thumb {
+  background: #45475a;
+  border: 2px solid #181825;
+  border-radius: 999px;
+}
+
+.themed-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #585b70;
+}

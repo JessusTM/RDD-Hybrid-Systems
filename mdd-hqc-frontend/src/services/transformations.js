@@ -32,10 +32,22 @@ export const transformCimToPim = async (path, options = {}) => {
 };
 
 /**
- * Requests the backend PIM-to-PSM transformation for the uploaded file path.
+ * Requests the backend CIM-to-PSM transformation for the uploaded XML file path.
  *
  * This service is used by the filter and application flow when the frontend needs the
  * generated PlantUML artifact and the related transformation metrics.
+ */
+export const transformCimToPsm = async (path, options = {}) => {
+  const response = await transformationsApi.post('/transformations/cim-to-psm', {
+    path,
+  }, {
+    signal: options.signal,
+  });
+  return response.data;
+};
+
+/**
+ * Requests the backend PIM-to-PSM transformation for an existing UVL file path.
  */
 export const transformPimToPsm = async (path, options = {}) => {
   const response = await transformationsApi.post('/transformations/pim-to-psm', {

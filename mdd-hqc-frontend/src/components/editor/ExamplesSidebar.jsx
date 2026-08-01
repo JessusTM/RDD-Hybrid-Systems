@@ -4,6 +4,39 @@
 
 import { BookOpen, ChevronRight, Lightbulb, X } from "lucide-react"
 
+const examples = [
+  {
+    id: "chileespres",
+    name: "ChileEsPres",
+    description:
+      "Enterprise route-planning scenario with a quantum annealing module for improved delivery routes.",
+    url: "/examples/ChileEsPres.xml",
+    previewImage: "/images/ChileEsPres.svg",
+    previewAlt: "ChileEsPres iStar model overview",
+    tags: [
+      ["i* 2.0", "border-ctp-mauve/30 bg-ctp-mauve/10 text-ctp-mauve"],
+      ["CIM", "border-ctp-blue/30 bg-ctp-blue/10 text-ctp-blue"],
+      ["Transport", "border-ctp-green/30 bg-ctp-green/10 text-ctp-green"],
+      ["Logistics", "border-ctp-yellow/30 bg-ctp-yellow/10 text-ctp-yellow"],
+    ],
+  },
+  {
+    id: "q-tradex",
+    name: "Q-TradeX",
+    description:
+      "Hybrid BTC classification using classical models and a VQC on IBM Quantum.",
+    url: "/examples/Q-TradeX.xml",
+    previewImage: "/images/Q-TradeX.svg",
+    previewAlt: "Q-TradeX iStar model overview",
+    tags: [
+      ["i* 2.0", "border-ctp-mauve/30 bg-ctp-mauve/10 text-ctp-mauve"],
+      ["CIM", "border-ctp-blue/30 bg-ctp-blue/10 text-ctp-blue"],
+      ["Finance", "border-ctp-green/30 bg-ctp-green/10 text-ctp-green"],
+      ["QML", "border-ctp-yellow/30 bg-ctp-yellow/10 text-ctp-yellow"],
+    ],
+  },
+]
+
 /**
  * Displays the example catalog used to start the flow from a predefined CIM model.
  *
@@ -17,14 +50,8 @@ export const ExamplesSidebar = ({ isOpen, onClose, onSelectExample }) => {
    * This handler is used by the example card because the sidebar is responsible for
    * packaging the predefined example metadata before the app consumes it.
    */
-  const handleSelect = () => {
-    onSelectExample?.({
-      id: "chileespres",
-      name: "ChileEsPres",
-      url: "/examples/ChileEsPres.xml",
-      previewImage: "/images/ChileEsPres.png",
-      previewAlt: "ChileEsPres example overview",
-    })
+  const handleSelect = (example) => {
+    onSelectExample?.(example)
     onClose?.()
   }
 
@@ -80,44 +107,45 @@ export const ExamplesSidebar = ({ isOpen, onClose, onSelectExample }) => {
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={handleSelect}
-              className="group w-full rounded-3xl border border-ctp-surface1 bg-ctp-surface0/40 p-6 text-left transition-all duration-300 hover:border-ctp-mauve/50 hover:bg-ctp-surface0"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <div className="text-3xl font-bold text-ctp-text">ChileEsPres</div>
-                  <p className="mt-3 text-xl leading-8 text-[#a0988c]">
-                    Enterprise route-planning scenario with a quantum annealing module for improved delivery routes.
-                  </p>
-                </div>
-                <ChevronRight className="mt-1 h-6 w-6 shrink-0 text-[#a0988c] transition-transform group-hover:translate-x-1 group-hover:text-ctp-text" />
-              </div>
+            <div className="space-y-6">
+              {examples.map((example) => (
+                <button
+                  type="button"
+                  key={example.id}
+                  onClick={() => handleSelect(example)}
+                  className="group w-full rounded-3xl border border-ctp-surface1 bg-ctp-surface0/40 p-6 text-left transition-all duration-300 hover:border-ctp-mauve/50 hover:bg-ctp-surface0"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="text-3xl font-bold text-ctp-text">{example.name}</div>
+                      <p className="mt-3 text-xl leading-8 text-[#a0988c]">
+                        {example.description}
+                      </p>
+                    </div>
+                    <ChevronRight className="mt-1 h-6 w-6 shrink-0 text-[#a0988c] transition-transform group-hover:translate-x-1 group-hover:text-ctp-text" />
+                  </div>
 
-              <div className="mt-4 flex flex-wrap items-center gap-3">
-                <span className="rounded-lg border border-ctp-mauve/30 bg-ctp-mauve/10 px-3 py-1 text-base font-bold uppercase tracking-wide text-ctp-mauve">
-                  i* 2.0
-                </span>
-                <span className="rounded-lg border border-ctp-blue/30 bg-ctp-blue/10 px-3 py-1 text-base font-bold uppercase tracking-wide text-ctp-blue">
-                  CIM
-                </span>
-                <span className="rounded-lg border border-ctp-green/30 bg-ctp-green/10 px-3 py-1 text-base font-bold uppercase tracking-wide text-ctp-green">
-                  Transport
-                </span>
-                <span className="rounded-lg border border-ctp-yellow/30 bg-ctp-yellow/10 px-3 py-1 text-base font-bold uppercase tracking-wide text-ctp-yellow">
-                  Logistics
-                </span>
-              </div>
+                  <div className="mt-4 flex flex-wrap items-center gap-3">
+                    {example.tags.map(([label, colors]) => (
+                      <span
+                        key={label}
+                        className={`rounded-lg border px-3 py-1 text-base font-bold uppercase tracking-wide ${colors}`}
+                      >
+                        {label}
+                      </span>
+                    ))}
+                  </div>
 
-              <div className="mt-4 overflow-hidden rounded-2xl border border-ctp-surface1 bg-white/95 p-2 shadow-inner shadow-black/5">
-                <img
-                  src="/images/ChileEsPres.png"
-                  alt="ChileEsPres example overview"
-                  className="h-auto w-full rounded-xl object-contain"
-                />
-              </div>
-            </button>
+                  <div className="mt-4 overflow-hidden rounded-2xl border border-ctp-surface1 bg-white/95 p-2 shadow-inner shadow-black/5">
+                    <img
+                      src={example.previewImage}
+                      alt={example.previewAlt}
+                      className="h-auto w-full rounded-xl object-contain"
+                    />
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </aside>
