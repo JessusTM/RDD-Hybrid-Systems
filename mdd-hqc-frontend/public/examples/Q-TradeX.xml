@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="4zUgNFXloSGGly-50jbp">
+    <mxGraphModel dx="582" dy="297" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object label="" type="owns" id="2">
+          <mxCell edge="1" parent="1" source="26" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;endSize=10;curved=1;entryX=0.028;entryY=0.384;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;rounded=0;fontFamily=Lucida Console;" target="12">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="198.22670823746134" y="795.2051818181817" as="sourcePoint" />
+              <mxPoint x="-59.058422311973686" y="815.295081967213" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" type="owns" id="3">
+          <mxCell edge="1" parent="1" source="5" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;endSize=10;curved=1;entryX=0.028;entryY=0.384;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;rounded=0;fontFamily=Lucida Console;" target="4">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="191.7597142857143" y="708.71" as="sourcePoint" />
+              <mxPoint x="-178.74738378093335" y="716.8100862812769" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" type="boundary" id="4">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;fillColor=#f8cecc;strokeColor=#b85450;allowArrows=0;container=1;dropTarget=1;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="59" width="146.7491872396722" x="277.47452704604206" y="688.71" as="geometry">
+              <mxRectangle height="44" width="49.05" x="44" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Quantum Module" type="agent" id="5">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="58.43" width="58.43" x="230" y="680" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="6" edge="1" parent="1" source="5" style="endArrow=none;html=1;rounded=0;startSize=9;endSize=6;sourcePerimeterSpacing=0;jumpStyle=sharp;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;strokeColor=#b85450;fillColor=#f8cecc;" target="5" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="274.85714285714283" y="664.46" as="sourcePoint" />
+            <mxPoint x="300.75" y="633.2099999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;span&gt;Provide Quantum Prediction&lt;/span&gt;" type="task" id="7">
+          <mxCell parent="1" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=1;fillColor=#f8cecc;strokeColor=#b85450;size=10;fontSize=10;allowArrows=0;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="42" width="59.98" x="344.222626237834" y="697.21" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span&gt;Quantum Input&lt;/span&gt;" type="resource" id="8">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f8cecc;strokeColor=#b85450;allowArrows=0;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="24.5" width="45.82" x="291.42452704604204" y="705.96" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" type="needed-by" id="9">
+          <mxCell edge="1" parent="1" source="7" style="endArrow=oval;html=1;rounded=0;endFill=1;endSize=5;labelPosition=right;verticalLabelPosition=top;align=left;verticalAlign=bottom;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Lucida Console;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="8">
+            <mxGeometry height="50" relative="1" width="50" x="0.5714" y="-20" as="geometry">
+              <mxPoint as="offset" />
+              <mxPoint x="475.2237142857143" y="748.95" as="sourcePoint" />
+              <mxPoint x="255.2237142857143" y="738.95" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Comparison Results" type="resource" id="10">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;allowArrows=0;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="25.65" width="60" x="364.2237142857143" y="811.71" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" type="boundary" id="11">
+          <mxCell connectable="0" parent="1" style="group;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="98" width="120" x="236.7837142857143" y="759" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" type="boundary" id="12">
+          <mxCell parent="11" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;fillColor=#d5e8d4;strokeColor=#82b366;allowArrows=0;container=1;dropTarget=1;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="98" width="101.20633602736017" x="18.793663972639845" as="geometry">
+              <mxRectangle height="44" width="49.05" x="26.62435729457312" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Understand Model Performance" type="goal" id="13">
+          <mxCell parent="12" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=1;fontSize=10;allowArrows=0;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="40.74" width="69.67" x="15.769999999999982" y="8.849999999999966" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" type="refinement" value="and" id="14">
+          <mxCell edge="1" parent="12" source="15" style="endArrow=ERone;html=1;rounded=0;endFill=0;endSize=5;labelPosition=right;verticalLabelPosition=top;align=left;verticalAlign=bottom;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="13">
+            <mxGeometry height="50" relative="1" width="50" x="0.5714" y="-20" as="geometry">
+              <mxPoint as="offset" />
+              <mxPoint x="207.25221838030137" y="53.639999999999986" as="sourcePoint" />
+              <mxPoint x="306.075747792066" y="53.639999999999986" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="&lt;span&gt;Define Experiment&lt;/span&gt;" type="task" id="15">
+          <mxCell parent="12" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=1;fillColor=#d5e8d4;strokeColor=#82b366;size=10;fontSize=10;allowArrows=0;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="28.5" width="70.58823529411765" x="15.31058823529412" y="60.639999999999986" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Quantum Prediction" type="resource" id="16">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;allowArrows=0;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="23.74" width="55.22" x="414.46371428571433" y="773.42" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" type="boundary" id="17">
+          <mxCell connectable="0" parent="1" style="group" vertex="1">
+            <mxGeometry height="73.82" width="150" x="310.71371428571433" y="861.3599999999999" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" type="boundary" id="18">
+          <mxCell parent="17" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;fillColor=#e1d5e7;strokeColor=#9673a6;allowArrows=0;container=1;dropTarget=1;" vertex="1">
+            <mxGeometry height="73.82" width="132.09642857142856" x="17.90357142857143" as="geometry">
+              <mxRectangle height="44" width="49.05" x="44" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Compare Models" type="goal" id="19">
+          <mxCell parent="18" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=1;fontSize=10;allowArrows=0;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="22.95367764705882" width="59.61" x="36.23999999999998" y="23.283696470588232" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" type="owns" id="20">
+          <mxCell edge="1" parent="17" source="22" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;endSize=10;curved=1;entryX=0.028;entryY=0.384;entryDx=0;entryDy=0;entryPerimeter=0;rounded=0;" target="18">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-48.88589973835481" y="20.598762626262626" as="sourcePoint" />
+              <mxPoint x="-281.75441580732195" y="33.20519988495828" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" type="agent" id="21">
+          <mxCell connectable="0" parent="17" style="group;allowArrows=0;fontFamily=Lucida Console;" vertex="1">
+            <mxGeometry height="60" width="79.78" x="-19.78" y="8.719444705882351" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;font face=&quot;Lucida Console&quot;&gt;Q-TradeX&lt;/font&gt;" type="agent" id="22">
+          <mxCell parent="21" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1">
+            <mxGeometry height="60" width="60" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="23" edge="1" parent="21" source="22" style="endArrow=none;html=1;rounded=0;startSize=9;endSize=6;sourcePerimeterSpacing=0;jumpStyle=sharp;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;strokeColor=#9673a6;fillColor=#e1d5e7;" target="22" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="44.55431423529413" y="-15.691578518384217" as="sourcePoint" />
+            <mxPoint x="90.96505823039222" y="-36.33839235836345" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object label="D" type="dependency-link" id="24">
+          <mxCell edge="1" parent="1" source="10" style="endArrow=classic;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=1;endFill=0;endSize=5;fontSize=10;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontFamily=Lucida Console;" target="19">
+            <mxGeometry height="50" relative="1" width="50" x="-0.5037" as="geometry">
+              <mxPoint as="offset" />
+              <Array as="points">
+                <mxPoint x="393.8437142857143" y="861.18" />
+                <mxPoint x="394.8437142857143" y="861.18" />
+                <mxPoint x="394.8437142857143" y="875.18" />
+                <mxPoint x="394.8437142857143" y="875.18" />
+              </Array>
+              <mxPoint x="440.0037142857143" y="836.71" as="sourcePoint" />
+              <mxPoint x="494.0037142857143" y="836.71" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="D" type="dependency-link" id="25">
+          <mxCell edge="1" parent="1" source="19" style="endArrow=classic;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=1;endFill=0;endSize=5;fontSize=10;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Lucida Console;" target="16">
+            <mxGeometry height="50" relative="1" width="50" x="0.375" y="2" as="geometry">
+              <mxPoint as="offset" />
+              <mxPoint x="361.7572857142858" y="911.2149999999999" as="sourcePoint" />
+              <mxPoint x="569.0037142857143" y="796.71" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="&lt;font face=&quot;Lucida Console&quot;&gt;User&lt;/font&gt;" type="agent" id="26">
+          <mxCell parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1">
+            <mxGeometry height="38.24" width="38.24" x="230.0037142857143" y="773.2072" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="27" edge="1" parent="1" source="26" style="endArrow=none;html=1;rounded=0;startSize=9;endSize=6;sourcePerimeterSpacing=0;jumpStyle=sharp;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;strokeColor=#82b366;fillColor=#d5e8d4;" target="26" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="253.7248907563025" y="761.5472" as="sourcePoint" />
+            <mxPoint x="271.37194957983195" y="733.0472" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object label="D" type="dependency-link" id="28">
+          <mxCell edge="1" parent="1" source="16" style="endArrow=classic;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=1;endFill=0;endSize=5;fontSize=10;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fontFamily=Lucida Console;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="7">
+            <mxGeometry height="50" relative="1" width="50" x="-0.4164" y="8" as="geometry">
+              <mxPoint as="offset" />
+              <mxPoint x="520.0037142857143" y="846.71" as="sourcePoint" />
+              <mxPoint x="470.0037142857143" y="796.71" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="D" type="dependency-link" id="29">
+          <mxCell edge="1" parent="1" source="13" style="endArrow=classic;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=1;endFill=0;endSize=5;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Lucida Console;" target="10">
+            <mxGeometry height="50" relative="1" width="50" x="-0.294" y="-8" as="geometry">
+              <mxPoint as="offset" />
+              <mxPoint x="331.69371428571424" y="859.46" as="sourcePoint" />
+              <mxPoint x="454.0037142857143" y="906.71" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
