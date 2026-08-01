@@ -52,7 +52,7 @@ Starting from an **iStar 2.0** goal model, the platform applies explicit transfo
 Each level progressively refines the same design problem and constrains the available solution space, while traceability metadata preserves the origin of the generated elements across transformations.
 
 <p align="center">
-  <img src="docs/images/layers.png" alt="MDD-HQC conceptual layers from CIM to PIM to preliminary HQC architecture" width="580">
+  <img src="docs/images/layers.png" alt="MDD-HQC conceptual layers from CIM to PIM to preliminary HQC architecture" width="460">
 </p>
 
 **LLM support** complements the deterministic transformation rules by identifying potentially missing, ambiguous, inconsistent, or misplaced information. Based on these findings, the LLM generates clarification questions and suggestions for the user.
@@ -144,19 +144,21 @@ The following tools must be installed before running the platform:
 
 ### Transformation Pipeline
 
-The system implements a transformation flow organized into three modeling levels:
+MDD-HQC organizes the design process across three connected modeling levels:
 
 1. **CIM (Computation Independent Model):** Represents stakeholder goals, needs, intentions, and dependencies using iStar 2.0
 2. **PIM (Platform Independent Model):** Represents HQC variability, design alternatives, and constraints through an extended feature model written in UVL
 3. **PSM (Platform Specific Model):** Represents the preliminary structure of the HQC system through a UML class diagram enriched with QuantumUML stereotypes
 
 <p align="center">
-  <img src="docs/images/transformation-flow.png" alt="Transformation pipeline from CIM to PIM to PSM" width="720">
+  <a href="docs/images/mdd-hqc-overview.svg">
+    <img src="docs/images/mdd-hqc-overview.svg" alt="MDD-HQC transformation overview, current capabilities, and future work" width="100%">
+  </a>
 </p>
 
-The transformations propagate origin information and metadata between levels, allowing generated elements to be traced back to the goals and design decisions from which they were derived.
+The current prototype applies explicit rules from goals to variability decisions and from selected decisions to a preliminary system structure. Rule-guided human–LLM assistance helps expose information gaps that cannot be resolved automatically, while controlled model updates and transformation traces remain under development.
 
-The current prototype automates the **CIM-to-PIM** and **PIM-to-PSM** transformations. The resulting PSM provides a preliminary structural representation rather than a complete software architecture or final implementation. Extending this flow toward architecture-guided code generation remains part of the planned work.
+The resulting PSM is not yet a complete HQC architecture. Conversational goal-modeling assistance, structural consistency support, and specification-driven code generation remain future work.
 
 ---
 
