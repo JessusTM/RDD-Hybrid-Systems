@@ -2,13 +2,46 @@
  * Guided questions modal used by the AI-assisted CIM-to-PIM interaction flow.
  */
 
+import { useEffect, useState } from "react"
+import { sendAnswers } from "../../../services/questions"
+
 /**
  * Displays the prepared questions generated after the CIM-to-PIM step.
  *
  * This component is used by the main application when guided interaction is available so
  * the user can review the generated questions in a dedicated modal view.
  */
-const GuidedQuestionsModal = ({ isOpen, onClose, questions, onContinue }) => {
+const GuidedQuestionsModal = ({ isOpen, onClose, questions, onContinue, uvlPath }) => {
+  const [answers, setAnswers] = useState({})
+  const [submitStatus, setSubmitStatus] = useState("idle")
+  const [submitError, setSubmitError] = useState("")
+
+  useEffect(() => {
+    setAnswers({})
+    setSubmitStatus("idle")
+    setSubmitError("")
+  }, [questions, uvlPath])
+
+  const handleSelect = (questionId, option) => {
+    setAnswers((currentAnswers) => ({ ...currentAnswers, [questionId]: option }))
+  }
+
+  const handleSubmit = async () => {
+    if (!uvlPath || submitStatus === "loading") return
+
+    setSubmitStatus("loading")
+    setSubmitError("")
+
+    try {
+      const result = await sendAnswers(uvlPath, answers)
+      setSubmitStatus("idle")
+      onContinue(result)
+    } catch (error) {
+      setSubmitStatus("error")
+      setSubmitError(error.response?.data?.detail || "Unable to submit answers. Please try again.")
+    }
+  }
+
   if (!isOpen) return null
 
   return (
@@ -55,7 +88,12 @@ const GuidedQuestionsModal = ({ isOpen, onClose, questions, onContinue }) => {
                     <button
                       type="button"
                       key={optionIndex}
-                      className="bg-gray-900 text-white px-3 py-2 rounded hover:bg-blue-600"
+                      onClick={() => handleSelect(q.id, opt)}
+                      className={`rounded px-3 py-2 text-white transition-colors ${
+                        answers[q.id] === opt
+                          ? "bg-blue-600"
+                          : "bg-gray-900 hover:bg-blue-600"
+                      }`}
                     >
                       {opt}
                     </button>
@@ -66,13 +104,16 @@ const GuidedQuestionsModal = ({ isOpen, onClose, questions, onContinue }) => {
           )}
         </div>
 
+        {submitError ? <p className="mb-3 text-sm text-red-300">{submitError}</p> : null}
+
         <div className="flex justify-end">
           <button
             type="button"
-            onClick={onContinue}
-            className="bg-gray-700 text-white px-4 py-2 rounded"
+            onClick={handleSubmit}
+            disabled={!uvlPath || submitStatus === "loading"}
+            className="rounded bg-gray-700 px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Continue
+            {submitStatus === "loading" ? "Submitting..." : "Continue"}
           </button>
         </div>
       </div>

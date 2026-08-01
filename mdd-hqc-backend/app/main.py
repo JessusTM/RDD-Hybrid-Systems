@@ -15,7 +15,7 @@ from app.core.logging.logging import setup_logging
 setup_logging()
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+app = FastAPI(title="MDD-HQC API", version="1.4.0")
 
 app.add_middleware(
     CORSMiddleware,

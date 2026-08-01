@@ -14,6 +14,7 @@ import { transformPimToPsm } from "../../services/transformations"
  */
 export const Filter = ({
   uploadedFilePath,
+  generatedUvlPath,
   uvlContent,
   onTransformCimToPim,
   onTransformPimToPsm,
@@ -41,11 +42,11 @@ export const Filter = ({
       }
       
       if (source === "PIM" && target === "PSM") {
-        if (!uvlContent) {
+        if (!uvlContent || !generatedUvlPath) {
           alert("You must complete the CIM -> PIM transformation first")
           return
         }
-        const response = await transformPimToPsm(uploadedFilePath)
+        const response = await transformPimToPsm(generatedUvlPath)
         onTransformPimToPsm?.(response)
       }
     } catch (error) {
@@ -57,7 +58,7 @@ export const Filter = ({
   }
 
   const canTransform = !sameLevel && uploadedFilePath &&
-    !(source === "PIM" && target === "PSM" && !uvlContent)
+    !(source === "PIM" && target === "PSM" && (!uvlContent || !generatedUvlPath))
 
   return (
     <div className="w-full relative">

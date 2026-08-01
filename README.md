@@ -7,9 +7,6 @@
     <a href="https://react.dev"><img src="https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React"></a>
     <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src="https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript"></a>
     <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"></a>
-    <a href="https://openrouter.ai"><img src="https://img.shields.io/badge/OpenRouter-LLM%20API-6D28D9?style=for-the-badge" alt="OpenRouter"></a>
-    <a href="https://github.com/astral-sh/uv"><img src="https://img.shields.io/badge/uv-Astral-2E71FF?style=for-the-badge" alt="uv"></a>
-    <a href="https://ollama.com"><img src="https://img.shields.io/badge/Ollama-optional-000000?style=for-the-badge&logo=ollama&logoColor=white" alt="Ollama (optional)"></a>
   </p>
   <p>
     <a href="#need-and-motivation">Need and Motivation</a> ·
@@ -17,6 +14,7 @@
     <a href="#system-features">System Features</a> ·
     <a href="#setup">Setup</a> ·
     <a href="#transformation-pipeline">Transformation Pipeline</a> ·
+    <a href="#illustrative-cases">Illustrative Cases</a> ·
     <a href="#screenshots">Screenshots</a>
   </p>
 </div>
@@ -25,71 +23,77 @@
   <a href="http://200.13.5.22:3000/"><strong><font size="7">Open the Editor</font></strong></a>
 </p>
 
-> **Version:** v1.3.3  
+> **Version:** v1.4.0<br>
 > **Status:** Functional Prototype  
+> **Research:** MDD-HQC was accepted at TLISC 2026, with related QuARC work accepted at Q-SET 2026.
 
-**MDD-HQC** is a model-driven platform for designing hybrid quantum-classical systems. It transforms **iStar 2.0** models into traceable **UVL** and **UML** artifacts enriched with **QuantumUML** stereotypes, with advisory **LLM support**.
+**MDD-HQC** is a model-driven platform for supporting the design of hybrid quantum-classical systems. It provides a traceable transformation flow from **iStar 2.0** goal models to variability models written in **UVL** and **UML class diagrams** enriched with **QuantumUML** stereotypes. The platform also incorporates advisory **LLM support** to assist users during model refinement.
 
 ---
 
 ### Need and Motivation
 
-**Hybrid quantum-classical (HQC) systems** combine classical and quantum components, using each paradigm where it offers the greatest benefit.
+**Hybrid quantum-classical (HQC) systems** combine classical and quantum components, assigning responsibilities to each computational paradigm according to the needs and constraints of the system.
 
-The main challenge is one of **design**: deciding **when**, **where**, and **how** quantum modules should be integrated into classical systems. These decisions are still expert-dependent and weakly traceable from early requirements to architectural decisions.
+Their development involves more than selecting a quantum algorithm. Software engineers must determine **whether**, **where**, and **how** quantum components should be incorporated into a predominantly classical system. This requires decisions concerning algorithms, integration mechanisms, quantum providers, execution backends, programming frameworks, and hardware constraints.
 
-Without a structured process, hybrid solutions are harder to **justify**, **evaluate**, and **maintain**.
+These decisions remain highly dependent on specialized knowledge and are often weakly connected to the original goals and requirements of the system. Without a structured development process, it becomes difficult to explain why quantum components were introduced and to trace how early requirements influenced subsequent design decisions.
+
+MDD-HQC addresses this problem by providing a systematic and traceable path from stakeholder goals to the preliminary structure of an HQC system.
 
 ---
 
 ### What It Does
 
-MDD-HQC supports HQC design through a **model-driven flow** from **CIM** to **PIM** and **PSM**.
+MDD-HQC supports the design of HQC systems through a **model-driven flow** organized into the **CIM**, **PIM**, and **PSM** abstraction levels.
 
-Starting from **iStar 2.0** goal models, the platform derives traceable **UVL** and **UML** artifacts enriched with **QuantumUML** stereotypes. Each level constrains the next one, narrowing the space of possible solutions and strengthening **vertical traceability**.
+Starting from an **iStar 2.0** goal model, the platform applies explicit transformation rules to derive an HQC variability model written in **UVL**. This model captures relevant design alternatives and constraints. A selected configuration is then transformed into a **UML class diagram** enriched with **QuantumUML** stereotypes to represent the preliminary structure of the hybrid system.
+
+Each level progressively refines the same design problem and constrains the available solution space, while traceability metadata preserves the origin of the generated elements across transformations.
 
 <p align="center">
-  <img src="docs/images/layers.png" alt="MDD-HQC conceptual layers from CIM to PIM to preliminary HQC architecture" width="580">
+  <img src="docs/images/layers.png" alt="MDD-HQC conceptual layers from CIM to PIM to preliminary HQC architecture" width="460">
 </p>
 
-**LLM support** helps identify **information gaps**, **ambiguities**, or **misplaced elements** during model refinement. It is **strictly advisory** and never makes decisions on behalf of the user.
+**LLM support** complements the deterministic transformation rules by identifying potentially missing, ambiguous, inconsistent, or misplaced information. Based on these findings, the LLM generates clarification questions and suggestions for the user.
+
+The LLM acts exclusively as an advisory mechanism: transformation decisions remain governed by explicit rules and user validation.
 
 ---
 
 ### System Features
 
-The following table summarizes the main capabilities considered in the proposed system.
+The following table summarizes the main capabilities included in or envisioned for MDD-HQC.
 
 > Status legend: ⬤ implemented, ◐ partial, ◯ not implemented.
 
 | Capability | Status |
 | --- | --- |
-| Goal-oriented capture of HQC requirements | ⬤ |
+| Goal-oriented modeling of HQC requirements | ⬤ |
 | Interview-based elicitation for CIM modeling | ◐ |
-| CIM model generation and refinement | ◐ |
-| CIM to PIM transformation | ⬤ |
-| PIM to PSM transformation | ⬤ |
-| Bidirectional or multi-entry process support | ◯ |
-| Variability management for HQC design | ⬤ |
+| CIM model generation and interactive refinement | ◯ |
+| Rule-based CIM-to-PIM transformation | ⬤ |
+| Rule-based PIM-to-PSM transformation | ⬤ |
+| Bidirectional or multi-entry transformation flow | ◯ |
+| Variability modeling for HQC design decisions | ⬤ |
 | Vertical traceability across modeling levels | ⬤ |
-| Semantic loss assessment across transformations | ◯ |
-| Code-oriented downstream generation | ◯ |
+| Assessment of semantic preservation across transformations | ◯ |
+| Architecture-to-code generation | ◯ |
 | Project analysis from local folders or GitHub repositories | ◯ |
-| AI-assisted interpretation and refinement | ◐ |
-
+| LLM-assisted detection of missing or inconsistent information | ◐ |
 
 ---
 
 ### Setup
 
-The following must be installed before starting:
+The following tools must be installed before running the platform:
 
 * Docker (version 20.10 or higher)
 * Docker Compose (version 2.0 or higher)
 * Git (for cloning the repository)
 
 > [!NOTE]
-> The system is designed to run in **containerized environments** using **Docker Compose** for compatibility and ease of deployment.
+> MDD-HQC is designed to run in a **containerized environment** using **Docker Compose**, simplifying dependency management and deployment across different systems.
 
 #### Using Docker Compose
 
@@ -100,19 +104,21 @@ The following must be installed before starting:
    ```
 
 2. **Create the backend environment file at the repository root:**
+
    ```bash
    cp .env.example .env
    ```
 
 3. **Create the frontend environment file:**
+
    ```bash
    cp mdd-hqc-frontend/.env.example mdd-hqc-frontend/.env
    ```
 
-   > [!NOTE]
-   > The backend reads variables from the root `.env`, while the React frontend reads `REACT_APP_*` variables from `mdd-hqc-frontend/.env`.
+   > The backend reads its configuration from the root `.env` file. The React frontend reads variables prefixed with `REACT_APP_` from `mdd-hqc-frontend/.env`.
 
-4. **Build and start the services:**
+4. **Build the images and start the services:**
+
    ```bash
    docker compose up --build
    ```
@@ -120,33 +126,70 @@ The following must be installed before starting:
    This command builds the backend and frontend images and starts both services.
 
 5. **Access the application:**
+
    * **Frontend:** [http://localhost:3000](http://localhost:3000)
    * **Backend API:** [http://localhost:8000](http://localhost:8000)
    * **API Documentation (Swagger):** [http://localhost:8000/docs](http://localhost:8000/docs)
 
 6. **Stop the services:**
+
    ```bash
    docker compose down
    ```
 
 > [!CAUTION]
-> Ensure that ports 3000 and 8000 are available on the system before running the containers. If these ports are in use, they can be modified in the `docker-compose.yml` file.
+> Ensure that ports 3000 and 8000 are available before starting the containers. If either port is already in use, its mapping can be changed in the `docker-compose.yml` file.
 
 ---
 
 ### Transformation Pipeline
 
-The system implements a **three-level transformation flow**:
+MDD-HQC organizes the design process across three connected modeling levels:
 
-1. **CIM (Computation Independent Model)**: Computation-independent model based on iStar 2.0
-2. **PIM (Platform Independent Model)**: Platform-independent model using UVL (Universal Variability Language)
-3. **PSM (Platform Specific Model)**: Platform-dependent model with UML artifacts enriched with QuantumUML stereotypes
+1. **CIM (Computation Independent Model):** Represents stakeholder goals, needs, intentions, and dependencies using iStar 2.0
+2. **PIM (Platform Independent Model):** Represents HQC variability, design alternatives, and constraints through an extended feature model written in UVL
+3. **PSM (Platform Specific Model):** Represents the preliminary structure of the HQC system through a UML class diagram enriched with QuantumUML stereotypes
 
 <p align="center">
-  <img src="docs/images/transformation-flow.png" alt="Transformation pipeline from CIM to PIM to PSM" width="720">
+  <a href="docs/images/mdd-hqc-overview.svg">
+    <img src="docs/images/mdd-hqc-overview.svg" alt="MDD-HQC transformation overview, current capabilities, and future work" width="100%">
+  </a>
 </p>
 
-Each transformation maintains **traceability** between levels, allowing elements to be followed from the business model to the platform-specific implementation.
+The current prototype applies explicit rules from goals to variability decisions and from selected decisions to a preliminary system structure. Rule-guided human–LLM assistance helps expose information gaps that cannot be resolved automatically, while controlled model updates and transformation traces remain under development.
+
+The resulting PSM is not yet a complete HQC architecture. Conversational goal-modeling assistance, structural consistency support, and specification-driven code generation remain future work.
+
+---
+
+### Illustrative Cases
+
+The following cases demonstrate how MDD-HQC represents different hybrid quantum-classical design scenarios from stakeholder goals and system responsibilities.
+
+<table>
+  <tr>
+    <td width="45%" align="center" valign="middle">
+      <a href="mdd-hqc-frontend/public/images/ChileEsPres.svg">
+        <img src="mdd-hqc-frontend/public/images/ChileEsPres.svg" alt="ChileEsPres iStar goal model" width="100%">
+      </a>
+    </td>
+    <td width="55%" valign="middle">
+      <h4>ChileEsPres</h4>
+      <p>A route-planning scenario that integrates quantum annealing to improve delivery decisions under resource and quality constraints.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="45%" align="center" valign="middle">
+      <a href="mdd-hqc-frontend/public/images/Q-TradeX.svg">
+        <img src="mdd-hqc-frontend/public/images/Q-TradeX.svg" alt="Q-TradeX iStar goal model" width="100%">
+      </a>
+    </td>
+    <td width="55%" valign="middle">
+      <h4>Q-TradeX</h4>
+      <p>Hybrid BTC classification using classical models and a VQC on IBM Quantum.</p>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -155,33 +198,57 @@ Each transformation maintains **traceability** between levels, allowing elements
 <table>
   <tr>
     <td width="50%" align="center">
-      <img src="docs/images/1.png" alt="Main interface" width="100%">
+      <img src="docs/images/mdd-hqc-main-interface.png" alt="Main MDD-HQC editor interface" width="100%">
       <br>
       <sub>Main interface</sub>
     </td>
     <td width="50%" align="center">
-      <img src="docs/images/2.png" alt="Embedded examples panel" width="100%">
+      <img src="docs/images/mdd-hqc-example-models.png" alt="Built-in example catalog in MDD-HQC" width="100%">
       <br>
-      <sub>Embedded examples panel</sub>
+      <sub>Built-in example catalog</sub>
     </td>
   </tr>
   <tr>
     <td width="50%" align="center">
-      <img src="docs/images/5.png" alt="Guided interaction" width="100%">
+      <img src="docs/images/mdd-hqc-preparing-questions.png" alt="MDD-HQC preparing LLM-assisted guided questions" width="100%">
       <br>
-      <sub>Guided interaction</sub>
+      <sub>Preparing guided questions</sub>
     </td>
     <td width="50%" align="center">
-      <img src="docs/images/6.png" alt="Transformation results" width="100%">
+      <img src="docs/images/mdd-hqc-llm-guided-interaction.png" alt="LLM-assisted guided interaction in MDD-HQC" width="100%">
       <br>
-      <sub>Transformation results</sub>
+      <sub>LLM-guided interaction</sub>
     </td>
   </tr>
   <tr>
     <td width="50%" align="center">
-      <img src="docs/images/3.png" alt="Editor workflow" width="100%">
+      <img src="docs/images/mdd-hqc-incorporate-uvl-answers.png" alt="Visual review of proposed UVL changes based on guided answers" width="100%">
       <br>
-      <sub>Editor workflow</sub>
+      <sub>Proposed UVL integration</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="docs/images/mdd-hqc-transformation-workflow.png" alt="Model-driven transformation workflow in MDD-HQC" width="100%">
+      <br>
+      <sub>Transformation workflow</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <img src="docs/images/mdd-hqc-cim-goal-model.png" alt="Enlarged CIM goal model in MDD-HQC" width="100%">
+      <br>
+      <sub>Enlarged CIM goal model</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="docs/images/mdd-hqc-uvl.png" alt="Enlarged UVL variability model in MDD-HQC" width="100%">
+      <br>
+      <sub>Enlarged UVL variability model</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <img src="docs/images/mdd-hqc-psm-class-diagram.png" alt="Enlarged PSM class diagram in MDD-HQC" width="100%">
+      <br>
+      <sub>Enlarged PSM class diagram</sub>
     </td>
     <td width="50%" align="center"></td>
   </tr>
@@ -192,5 +259,5 @@ Each transformation maintains **traceability** between levels, allowing elements
 ### Home Landing
 
 <p align="center">
-  <img src="docs/images/4.png" alt="Home landing page" width="460">
+  <img src="docs/images/mdd-hqc-landing-page.png" alt="MDD-HQC landing page" width="460">
 </p>
