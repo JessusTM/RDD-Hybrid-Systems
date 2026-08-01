@@ -1,10 +1,15 @@
 """OpenRouter provider implementation for interaction analyzers."""
 
+import json
+import logging
+
 import requests
 
 from app.core.config import config
 
 from .base import LLMProvider
+
+logger = logging.getLogger(__name__)
 
 
 class OpenRouterProvider(LLMProvider):
@@ -18,6 +23,12 @@ class OpenRouterProvider(LLMProvider):
         self.timeout = config.LLM_TIMEOUT
 
     def generate(self, prompt: str) -> str:
+        from app.services.interaction.service import cancellation_context
+
+        cancellation_event = cancellation_context.get()
+        if cancellation_event and cancellation_event.is_set():
+            return ""
+
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
@@ -28,21 +39,44 @@ class OpenRouterProvider(LLMProvider):
             "model": self.model_name,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": self.temperature,
+            "stream": True,
         }
-        response = requests.post(
+        content_parts = []
+
+        with requests.post(
             self.url,
             headers=headers,
             json=payload,
             timeout=self.timeout,
-        )
-        response.raise_for_status()
+            stream=True,
+        ) as response:
+            response.raise_for_status()
 
-        response_data = response.json()
-        choices = response_data.get("choices", [])
-        if not choices:
-            return ""
+            for line in response.iter_lines(decode_unicode=True):
+                if cancellation_event and cancellation_event.is_set():
+                    logger.info("OpenRouter stream closed after request cancellation.")
+                    response.close()
+                    return ""
 
-        first_choice = choices[0]
-        message = first_choice.get("message", {})
-        content = message.get("content", "")
-        return content.strip()
+                if not line or not line.startswith("data:"):
+                    continue
+
+                data = line.removeprefix("data:").strip()
+                if data == "[DONE]":
+                    break
+
+                try:
+                    chunk = json.loads(data)
+                except json.JSONDecodeError:
+                    logger.debug("Ignored invalid OpenRouter stream chunk.")
+                    continue
+
+                choices = chunk.get("choices", [])
+                if not choices:
+                    continue
+
+                text = choices[0].get("delta", {}).get("content")
+                if text:
+                    content_parts.append(text)
+
+        return "".join(content_parts).strip()
