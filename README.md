@@ -208,9 +208,21 @@ The following cases demonstrate how MDD-HQC represents different hybrid quantum-
   </tr>
   <tr>
     <td width="50%" align="center">
+      <img src="docs/images/mdd-hqc-preparing-questions.png" alt="MDD-HQC preparing LLM-assisted guided questions" width="100%">
+      <br>
+      <sub>Preparing guided questions</sub>
+    </td>
+    <td width="50%" align="center">
       <img src="docs/images/mdd-hqc-llm-guided-interaction.png" alt="LLM-assisted guided interaction in MDD-HQC" width="100%">
       <br>
       <sub>LLM-guided interaction</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <img src="docs/images/mdd-hqc-incorporate-uvl-answers.png" alt="Visual review of proposed UVL changes based on guided answers" width="100%">
+      <br>
+      <sub>Proposed UVL integration</sub>
     </td>
     <td width="50%" align="center">
       <img src="docs/images/mdd-hqc-transformation-workflow.png" alt="Model-driven transformation workflow in MDD-HQC" width="100%">
@@ -225,10 +237,18 @@ The following cases demonstrate how MDD-HQC represents different hybrid quantum-
       <sub>Enlarged CIM goal model</sub>
     </td>
     <td width="50%" align="center">
+      <img src="docs/images/mdd-hqc-uvl.png" alt="Enlarged UVL variability model in MDD-HQC" width="100%">
+      <br>
+      <sub>Enlarged UVL variability model</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
       <img src="docs/images/mdd-hqc-psm-class-diagram.png" alt="Enlarged PSM class diagram in MDD-HQC" width="100%">
       <br>
       <sub>Enlarged PSM class diagram</sub>
     </td>
+    <td width="50%" align="center"></td>
   </tr>
 </table>
 
