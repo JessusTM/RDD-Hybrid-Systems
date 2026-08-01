@@ -361,7 +361,7 @@ export const CIM = ({ onFileUploaded, onMetricsLoaded, metrics, selectedExample,
 
       {/* Metrics area */}
       <div className="shrink-0 bg-ctp-mantle border-t border-ctp-surface0/50 p-4">
-        <div className="min-h-[104px] rounded-lg bg-ctp-mantle/40 p-4 overflow-y-auto max-h-[300px]">
+        <div className="themed-scrollbar min-h-[104px] max-h-[300px] overflow-y-auto rounded-lg bg-ctp-mantle/40 p-4">
           {loading ? (
             <>
               {/* Loading metrics */}
